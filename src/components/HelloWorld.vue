@@ -26,7 +26,8 @@ const count = ref(0)
     >, the official Vue + Vite starter
   </p>
   <p>
-    LOLOLOLOL
+<<<<<<< HEAD
+   beka z gita
     <a
       href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
       target="_blank"
