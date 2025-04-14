@@ -26,7 +26,7 @@ const count = ref(0)
     >, the official Vue + Vite starter
   </p>
   <p>
-    HUJ WAM W DUPE
+    Nie mow tak brzydko
     <a
       href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
       target="_blank"
