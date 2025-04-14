@@ -4,7 +4,4 @@ import Main from './components/Main.vue';
 
 <template>
     <p>Kocham piwo</p>
-    <Main/>
-    
 </template>
-

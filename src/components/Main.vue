@@ -5,4 +5,5 @@ console.log("cos bedzie");
     <p>tu bedzie wszystko</p>
     <p>okok</p>
     <p>comicik</p>
+    <p>drugi comicik</p>
 </template>
