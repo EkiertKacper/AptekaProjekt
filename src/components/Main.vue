@@ -3,9 +3,6 @@
 
 <template>
 
-    
-
-
     <div class="main">
 
         <div class="header">
@@ -15,17 +12,7 @@
         <div class="container">
             <ul>
                 <li>
-                    <img src="../assets/lek.jpeg" alt="#">
-                    <p>Nazwa leku</p>
-                    <p>Cena</p>
-                </li>
-                <li>
-                    <img src="../assets/lek.jpeg" alt="#">
-                    <p>Nazwa leku</p>
-                    <p>Cena</p>
-                </li>
-                <li>
-                    <img src="../assets/lek.jpeg" alt="#">
+                    <img src="#" alt="#">
                     <p>Nazwa leku</p>
                     <p>Cena</p>
                 </li>
@@ -37,9 +24,6 @@
         </div>
 
     </div>
-
-
-    
 
 </template>
 
