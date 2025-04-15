@@ -1,5 +1,6 @@
 <script setup>
-    import {ref} from 'vue'
+    import {ref, onMounted} from 'vue'
+
     const data = ref('')
     const fetchData = async () => {
         const token = localStorage.getItem("sessionToken")
@@ -20,11 +21,16 @@
 
         const fullData = await response.json()
         data.value = fullData.data
+        console.log(data.value);
 
       } catch (error) {
         console.log(error);
       }
     }
+    onMounted(() => {
+        fetchData()
+    })
+    
 </script>
 
 <template>
@@ -40,21 +46,11 @@
 
         <div class="container">
             <ul>
-                <li>
-                    <img src="../assets/lek.jpeg" alt="#">
-                    <p>Nazwa leku</p>
-                    <p>Cena</p>
+                <li v-for="item in data">
+                    <p>{{ item.name }}</p>
+                    <p>{{ item.price }}</p>
                 </li>
-                <li>
-                    <img src="../assets/lek.jpeg" alt="#">
-                    <p>Nazwa leku</p>
-                    <p>Cena</p>
-                </li>
-                <li>
-                    <img src="../assets/lek.jpeg" alt="#">
-                    <p>Nazwa leku</p>
-                    <p>Cena</p>
-                </li>
+
             </ul>
         </div>
         
