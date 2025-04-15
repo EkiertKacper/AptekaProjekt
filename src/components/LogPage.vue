@@ -35,7 +35,6 @@ async function login() {
       body: JSON.stringify({ email: email.value, password: password.value })
     });
     const data = await res.json();
-    console.log("2");
     if (res.ok) {
       localStorage.setItem("sessionToken", data.data);
       emit("logged", true)
