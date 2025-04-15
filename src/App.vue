@@ -1,7 +1,13 @@
 <script setup>
-import Main from './components/Main.vue';
+    import {ref} from 'vue'
+    import Main from './components/Main.vue';
+    import LogPage from './components/LogPage.vue'
+
+    const isLogged = ref(false)
+    
 </script>
 
 <template>
-    <p>Kocham piwo</p>
+    <LogPage v-if="!isLogged" @logged="()=>isLogged = true"/>
+    <component v-if="isLogged" :is="Main"></component>
 </template>
