@@ -9,6 +9,7 @@
     }
     fetchData()
 </script>
+
 <template>
     <p>tu bedzie wszystko</p>
     <p>okok</p>
