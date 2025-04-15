@@ -29,13 +29,14 @@ async function login() {
   }
 
   try {
+    console.log("1");
     const res = await fetch('http://localhost:3030/api/v1/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email.value, password: password.value })
     });
     const data = await res.json();
-
+    console.log("2");
     if (res.ok) {
       localStorage.setItem("sessionToken", data.data);
       emit("logged", true)
