@@ -39,7 +39,7 @@
 
         <div class="header">
             <h1>Witaj w aplikacji</h1>
-            <button><i class="fa-solid fa-cart-shopping"></i></button>
+            <button><i class="fa-regular fa-cart-shopping" style="color: #000000;"></i></button>
         </div>
 
         <div class="container">
@@ -121,22 +121,12 @@ $gray: #666;
     width: 20px;
   }
 
-  i::before{
-    height: 40px;
-    width: 40px;
-  }
-
-  i:active { /* sprawdzenie czy działa */
-    border: 4px solid black;
-    border-radius: 8px;
-  }
-
   h1 {
     font-size: 20px;
     font-weight: bold;
       color: $black;
     }
-  }
+}
 
 .container {
   padding: 12px;
@@ -206,33 +196,29 @@ $gray: #666;
 
           &:active {
             background-color: lighten($green, 10%);
+          }
         }
       }
-
-      label{
-        display: flex;
-        align-items: center;
-        margin-right: 30px;
-        color: #000;
-        
-        
-        
-
-        select{
-          height: 40px;
-          width: 100%;
-          padding: 10px 16px;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-          background-color: white;
-          color: #333;
-          font-size: 16px;
-        } 
-
-      }
     }
-  
   }
+
+    label{
+          display: flex;
+          align-items: center;
+          margin-right: 30px;
+          color: #000;
+        
+    select{
+      height: 40px;
+      width: 100%;
+      padding: 10px 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: white;
+      color: #333;
+      font-size: 16px;
+    } 
+  
 }
 
 
