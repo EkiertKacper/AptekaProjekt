@@ -34,10 +34,6 @@
 </script>
 
 <template>
-
-    
-
-
     <div class="main">
 
         <div class="header">
@@ -50,7 +46,6 @@
                     <p>{{ item.name }}</p>
                     <p>{{ item.price }}</p>
                 </li>
-
             </ul>
         </div>
         
