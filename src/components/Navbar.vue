@@ -1,10 +1,14 @@
 <script setup>
-import { ref, defineComponent, shallowRef, onMounted } from "vue";
+import { ref, defineComponent, shallowRef, onMounted, watch } from "vue";
 import { usePageChanger } from "../state/pageChanger"
 
+const props = defineProps({
+  isLargeScreen: {
+    type: Boolean
+  }
+});
 const nav = ref(null)
 let lastScrollY;
-
 onMounted(() => {
   lastScrollY = window.scrollY;
   window.addEventListener("scroll", () => {
@@ -55,7 +59,7 @@ const switcher = (e) => {
 </script>
 
 <template>
-    <nav ref="nav">
+    <nav ref="nav" class="mobileNav" v-if="!props.isLargeScreen">
         <div id="glowna" class="box" @click="switcher">
             <p class="navItem"><span class="material-symbols-outlined">home</span></p>
         </div>    
@@ -66,12 +70,14 @@ const switcher = (e) => {
             <p class="navItem"><span class="material-symbols-outlined">person</span></p>
         </div> 
     </nav>
-
+    <nav class="desktopNav" v-if="props.isLargeScreen">
+        <h1 style="color: black;">Bedzie navbar</h1>
+    </nav>
 </template>
 
 <style scoped lang="scss">
     $mint: #57FF90;
-    nav{
+    .mobileNav{
         transition: transform 0.3s ease-in-out;
         transform: translateY(0); // domyślnie widoczny
         width: 100vw;
@@ -129,5 +135,12 @@ const switcher = (e) => {
             }
             }
         }
+    }
+    .desktopNav{
+        display: flex;
+        position: fixed;
+        height: 100vh;
+        width: 13vw;
+        background-color: gold;
     }
 </style>

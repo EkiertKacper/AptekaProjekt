@@ -1,18 +1,29 @@
 <script setup>
-    import {ref} from 'vue'
+    import {onMounted, ref, computed} from 'vue'
     import ProductList from './components/ProductList.vue';
     import LogPage from './components/LogPage.vue'
     import DragPage from './components/DragPage.vue';
     import Navbar from './components/Navbar.vue';
 
     const isLogged = ref(false)
+    const isLargeScreen = ref(false);
     
+    const margin = computed(() => ({
+      marginLeft: isLargeScreen.value ? '13vw' : ''
+    }));
+    function updateScreenSize() {
+      isLargeScreen.value = window.innerWidth > 1024;
+    }
+    onMounted(()=>{
+        updateScreenSize()
+        window.addEventListener('resize', updateScreenSize);
+    })
 </script>
 
 <template>
-    <Navbar v-if="isLogged"/>
+    <Navbar :isLargeScreen="isLargeScreen" v-if="isLogged"/>
     <LogPage v-if="!isLogged" @logged="()=>isLogged = true"/> 
-    <component v-if="isLogged" :is="ProductList"></component>
+    <component :style="[margin]" v-if="isLogged" :is="ProductList"></component>
 
 </template>
 <style>
