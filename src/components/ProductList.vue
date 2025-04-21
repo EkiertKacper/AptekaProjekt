@@ -37,13 +37,6 @@ const addProduct = () => {
 
 <template>
   <main>     
-      <header>
-        <h1>Witaj w aplikacji</h1>
-        <button>
-          <span style="color: black;" class="material-symbols-outlined">shopping_cart</span>
-        </button>
-      </header>
-
       <div class="container">
         <ul>
           <li v-for="item in data">
