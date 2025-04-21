@@ -1,6 +1,23 @@
 <script setup>
-import { ref, defineComponent, shallowRef } from "vue";
+import { ref, defineComponent, shallowRef, onMounted } from "vue";
 import { usePageChanger } from "../state/pageChanger"
+
+const nav = ref(null)
+let lastScrollY;
+
+onMounted(() => {
+  lastScrollY = window.scrollY;
+  window.addEventListener("scroll", () => {
+    if (!nav.value) return;
+
+    if (window.scrollY > lastScrollY) {
+      nav.value.style.transform = "translateY(100%)";
+    } else {
+      nav.value.style.transform = "translateY(0)";
+    }
+    lastScrollY = window.scrollY;
+  });
+});
 
 const pageChanger = usePageChanger()
 const currentPage = ref(pageChanger.currentPage)
@@ -23,26 +40,29 @@ const switcher = (e) => {
     }
     switch(e.currentTarget.id){
         case "glowna":
-            pageChanger.changePage(page1)
-            currentPage.value = page1
+            pageChanger.changePage()
+            currentPage.value = 0
             break
         case "produkty": 
-            pageChanger.changePage(page2)
-            currentPage.value = page2
+            pageChanger.changePage()
+            currentPage.value = 0
             break;
+        case "ustawienia":
+            pageChanger.changePage()    
+            currentPage.value = 0
     }
 }
 </script>
 
 <template>
-    <nav>
+    <nav ref="nav">
         <div id="glowna" class="box" @click="switcher">
             <p class="navItem"><span class="material-symbols-outlined">home</span></p>
         </div>    
         <div id="produkty" class="box" @click="switcher">
             <p class="navItem"><span class="material-symbols-outlined">shopping_bag</span></p>
         </div>         
-        <div class="box" @click="switcher">
+        <div id="ustawienia" class="box" @click="switcher">
             <p class="navItem"><span class="material-symbols-outlined">person</span></p>
         </div> 
     </nav>
@@ -52,6 +72,8 @@ const switcher = (e) => {
 <style scoped lang="scss">
     $mint: #57FF90;
     nav{
+        transition: transform 0.3s ease-in-out;
+        transform: translateY(0); // domyślnie widoczny
         width: 100vw;
         border-radius: 1rem 1rem 0 0;
         display: flex;
