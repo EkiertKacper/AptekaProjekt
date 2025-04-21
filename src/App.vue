@@ -4,6 +4,7 @@
     import LogPage from './components/LogPage.vue'
     import DragPage from './components/DragPage.vue';
     import Navbar from './components/Navbar.vue';
+import SearchBar from './components/SearchBar.vue';
 
     const isLogged = ref(false)
     const isLargeScreen = ref(false);
@@ -21,10 +22,10 @@
 </script>
 
 <template>
+    <SearchBar v-if="isLogged" :style="[margin]"/>
     <Navbar :isLargeScreen="isLargeScreen" v-if="isLogged"/>
     <LogPage v-if="!isLogged" @logged="()=>isLogged = true"/> 
     <component :style="[margin]" v-if="isLogged" :is="ProductList"></component>
-
 </template>
 <style>
 *{
