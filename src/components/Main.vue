@@ -36,7 +36,7 @@ onMounted(() => {
 
 <template>
   <div class="main">
- 
+<!--  
     <aside class="sidebar">
       <h2>Menu</h2>
       <ul>
@@ -64,7 +64,7 @@ onMounted(() => {
           <li @click="showMobileMenu = false">Ustawienia</li>
         </ul>
       </div>
-    </transition>
+    </transition> -->
 
       
     <div class="content">
@@ -229,7 +229,7 @@ $gray: #666;
   flex-direction: column;
 
   .header {
-    background-color: $green;
+    background-color: white;
     padding: 12px;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
