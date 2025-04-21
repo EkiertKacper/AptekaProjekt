@@ -9,7 +9,7 @@ import DragPage from './components/DragPage.vue';
 </script>
 
 <template>
-    <!-- <LogPage v-if="!isLogged" @logged="()=>isLogged = true"/> -->
-    <!-- <component v-if="isLogged" :is="Main"></component> -->
-    <DragPage/>
+    <LogPage v-if="!isLogged" @logged="()=>isLogged = true"/> 
+    <component v-if="isLogged" :is="Main"></component>
+    <!-- <DragPage/> -->
 </template>
