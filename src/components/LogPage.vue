@@ -116,12 +116,12 @@ main {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f8f8f8; /* Bardzo jasny szary jako tło główne */
+  background-color: #f8f8f8; 
   padding: 20px;
 }
 
 .auth-box {
-  background-color: #fff; /* Biały kontener formularza dla kontrastu */
+  background-color: #fff; 
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -131,7 +131,7 @@ main {
 }
 
 h2 {
-  color: #386641; /* Zielony jako główny kolor akcentu */
+  color: #386641; 
   margin-bottom: 20px;
 }
 
@@ -144,7 +144,7 @@ h2 {
 }
 
 .success {
-  background-color: #d7fada; /* Jasnozielony odcień sukcesu (możemy go lekko dostosować) */
+  background-color: #d7fada; 
   color: #81b433;
   padding: 10px;
   border-radius: 4px;
@@ -158,19 +158,19 @@ input[type="password"] {
   width: calc(100% - 22px);
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #f0f0f0; /* Jasny szary jako obramowanie */
+  border: 1px solid #f0f0f0;
   border-radius: 4px;
   font-size: 16px;
 }
 
 input:focus {
   outline: none;
-  border-color: #386641; /* Zielony jako kolor fokusu */
-  box-shadow: 0 0 5px #3866417e/* Cień w zielonym kolorze */
+  border-color: #386641; 
+  box-shadow: 0 0 5px #3866417e
 }
 
 button {
-  background-color: #81b433; /* Zielony jako kolor głównego przycisku */
+  background-color: #81b433; 
   color: white;
   padding: 12px 20px;
   border: none;
@@ -183,12 +183,11 @@ button {
 
 button:hover {
   background-color: #386641;
-  /* Ciemniejszy odcień zieleni na hover */
 }
 
 .switch-btn {
   background-color: transparent;
-  color: #386641; /* Zielony dla przycisku przełączania */
+  color: #386641;
   border: none;
   padding: 12px 20px;
   cursor: pointer;
@@ -197,7 +196,7 @@ button:hover {
 }
 
 .switch-btn:hover {
-  color: #fff; /* Ciemniejszy odcień zieleni na hover */
+  color: #fff; 
   text-decoration: underline;
 }
 </style>
