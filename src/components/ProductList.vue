@@ -59,7 +59,8 @@ const addProduct = () => {
 
 
 <style scoped lang="scss">
-$green: #57FF90;
+// $green: #57FF90;
+$green:#81b433;
 $light-gray: #f8f8f8;
 $shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 $black: #000;

@@ -171,41 +171,43 @@ const switcher = (e) => {
             }
         }
     }
+
+@media screen and (min-width: 1250px) {
 .desktopNav{
-  position: fixed;
-  top:0;
+    position: fixed;
+    top:0;
     .navBar-pc {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 13vw;
       height: 100vh;
-      background-color: #1a3d2f; // ciemna zieleń, naturalna
-      color: white;
+      background-color: #f0f0f0;
+      color: black;
       font-family: 'Poppins', sans-serif;
+      overflow: hidden;
 
       .logo-section {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
-        padding: 20px;
-        background-color: #c4d6b0; // jasny beż
+        padding: 1rem;
 
         .logo-img {
-          height: 60px;
-          width: auto;
+          height: 15vh;
+          cursor: pointer;
         }
 
         .logo-text {
-          font-size: 1.8rem;
-          font-weight: bold;
-          color: #1a3d2f;
+          display: none;
+          // font-size: 1.8rem;
+          // font-weight: bold;
+          // color: #1a3d2f;
         }
       }
 
       .separator {
-        background-color: #3d5f4d;
+        background-color: #d0d0d0;
         width: 100%;
         height: 1px;
         margin: 10px 0;
@@ -221,11 +223,14 @@ const switcher = (e) => {
         align-items: center;
         padding: 12px 16px;
         border-radius: 8px;
-        transition: background 0.3s ease;
         cursor: pointer;
 
         &:hover {
-          background-color: #2f4f3e;
+          background-color: #6b9922;
+          color: #fff;
+        }
+        &:active{
+          filter: brightness(0.75);
         }
 
         .icon {
@@ -234,7 +239,7 @@ const switcher = (e) => {
           margin-right: 12px;
 
           svg {
-            fill: #fff;
+            fill: #000;
             width: 24px;
             height: 24px;
           }
@@ -246,4 +251,75 @@ const switcher = (e) => {
       }
     }
   }
+}
+
+@media screen and (max-width: 1250px) {
+  .desktopNav{
+    position: fixed;
+    top:0;
+    .navBar-pc {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 8vw;
+      height: 100vh;
+      background-color: #f0f0f0;
+      color: black;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5%;
+
+        .logo-img {
+          width: 100%;
+          cursor: pointer;
+        }
+
+        .logo-text {
+          display: none;
+        }
+      }
+
+      .separator {
+        background-color: #d0d0d0;
+        width: 100%;
+        height: 1px;
+      }
+
+      .main-section {
+        width: 100%;
+      }
+
+      .menu-option {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #6b9922;
+          color: #fff;
+        }
+        &:active{
+          filter: brightness(0.75);
+        }
+
+        .icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 50% 0;
+        }
+
+        .label {
+          display: none;
+        }
+      }
+    }
+  }
+}
 </style>

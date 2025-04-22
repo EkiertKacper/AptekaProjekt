@@ -13,7 +13,7 @@ import SearchBar from './components/SearchBar.vue';
       marginLeft: isLargeScreen.value ? '13vw' : ''
     }));
     function updateScreenSize() {
-      isLargeScreen.value = window.innerWidth > 1024;
+      isLargeScreen.value = window.innerWidth > 768;
     }
     onMounted(()=>{
         updateScreenSize()
