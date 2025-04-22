@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import DropdownList from './DropdownList.vue';
-import CartPage from './Cart.vue';
+import Cart from './Cart.vue';
 import BurgerMenu from "./BurgerMenu.vue";
 
 const data = ref("");
@@ -44,7 +44,7 @@ const addProduct = () => {};
     <div class="container">
         <DropdownList/>
       <div class="right-section">
-        <CartPage/>
+        <Cart/>
       </div>
     </div>
   </main>

@@ -1,15 +1,13 @@
 <script setup>
     import {onMounted, ref, computed} from 'vue'
-    import ProductList from './components/ProductList.vue';
     import LogPage from './components/LogPage.vue'
-    import DragPage from './components/DragPage.vue';
     import Navbar from './components/Navbar.vue';
-import SearchBar from './components/SearchBar.vue';
-import UserPanel from './components/UserPanel.vue';
-
+    import SearchBar from './components/SearchBar.vue';
+    import { usePageChanger } from './state/pageChanger';
 
     const isLogged = ref(false)
     const isLargeScreen = ref(false);
+    const pageChanger = usePageChanger()
     
     const margin = computed(() => ({
       marginLeft: isLargeScreen.value ? '13vw' : ''
@@ -27,7 +25,7 @@ import UserPanel from './components/UserPanel.vue';
     <SearchBar v-if="isLogged" :style="[margin]"/>
     <Navbar :isLargeScreen="isLargeScreen" v-if="isLogged"/>
     <LogPage v-if="!isLogged" @logged="()=>isLogged = true"/> 
-    <component :style="[margin]" v-if="isLogged" :is="UserPanel"></component>
+    <component :style="[margin]" v-if="isLogged" :is="pageChanger.currentPage"></component>
 </template>
 <style>
 *{

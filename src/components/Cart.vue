@@ -32,7 +32,7 @@ const handleMouseUp = () => {
         <div class="cart-header">Koszyk</div>
         <div class="cart-item" v-for="item in 5" :key="item">
           <div class="product-info">
-            <img src="https://via.placeholder.com/50" alt="Product" />
+            <img src="#" alt="Product" />
             <div class="product-name">Nazwa Produktu</div>
           </div>
           <div class="product-actions">
