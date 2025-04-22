@@ -122,6 +122,7 @@ const switcher = (e) => {
         background-color: $mint;
         position: fixed;
         bottom: 0;
+        z-index: 1000;
         .box{
             display: flex;
             justify-content: center;
