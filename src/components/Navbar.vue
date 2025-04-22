@@ -111,7 +111,7 @@ const switcher = (e) => {
 </template>
 
 <style scoped lang="scss">
-    $mint: #57FF90;
+    $mint: #6b9922;
     .mobileNav{
         transition: transform 0.3s ease-in-out;
         transform: translateY(0); // domyślnie widoczny
@@ -165,7 +165,7 @@ const switcher = (e) => {
                     transform:scaleX(1);                    
                 }
                 &::before{
-                background-color: white;
+                background-color: #f0f0f0;
                 box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
             }
             }
