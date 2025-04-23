@@ -62,7 +62,7 @@ import { watch, ref } from 'vue';
         <ul v-if="results != undefined">
             <li v-for="res in results">
                 <div>
-                    <img src="../assets/lek.jpeg" alt="Lek">
+                    <img :src="res.image" alt="Lek">
                     <h2>{{ res.name }}</h2>
                     <p>{{ res.price.toFixed(2) }}zł</p>
                 </div>
@@ -95,7 +95,8 @@ import { watch, ref } from 'vue';
                     height: 100%;
 
                     img{
-                        width: 50%;
+                        width: 100%;
+                        max-height: 90px;
                     }
                 }
             }    
