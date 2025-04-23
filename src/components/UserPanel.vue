@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import DropdownList from './DropdownList.vue';
-import Cart from './Cart.vue';
-import BurgerMenu from "./BurgerMenu.vue";
+import DropdownList from "./DropdownList.vue";
+import Cart from "./Cart.vue";
+import BurgerMenu from "./MenuItems.vue";
 
 const data = ref("");
 
@@ -34,17 +34,14 @@ onMounted(() => {
   fetchData();
 });
 const addProduct = () => {};
-
-
 </script>
 
 <template>
   <main>
-    <BurgerMenu/>
     <div class="container">
-        <DropdownList/>
+      <DropdownList />
       <div class="right-section">
-        <Cart/>
+        <Cart />
       </div>
     </div>
   </main>
@@ -68,8 +65,6 @@ main {
     padding: 12px;
     justify-content: space-between;
     min-height: 95vh;
-
-    
 
     .right-section {
       flex-grow: 1;
@@ -155,7 +150,7 @@ main {
         }
       }
       .horizontal-scroll {
-       margin: 0 auto;
+        margin: 0 auto;
         margin-top: 20px;
         background-color: $light-gray;
         padding: 20px;
@@ -165,10 +160,10 @@ main {
         box-sizing: border-box;
         cursor: grab;
         scrollbar-width: none;
-        -ms-overflow-style: none; 
+        -ms-overflow-style: none;
         &::-webkit-scrollbar {
-        display: none;
-    }
+          display: none;
+        }
         &:active {
           cursor: grabbing;
         }
@@ -233,6 +228,11 @@ main {
     }
   }
 }
+@media screen and (min-width: 1250px) {
+  .container {
+    margin-right: 10%;
+  }
+}
 @media screen and (max-width: 1250px) {
   .container {
     flex-direction: column;
@@ -240,8 +240,6 @@ main {
     justify-content: center;
     padding: 20px;
     margin-left: none;
-
-    
 
     .right-section {
       width: 100%;
