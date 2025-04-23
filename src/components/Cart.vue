@@ -82,14 +82,14 @@ const removeItem = (id) => {
         <div class="product-name">{{ item.name }}</div>
       </div>
       <div class="product-actions">
-        <span>{{ item.price }} zł</span>
+        <span>{{ item.price.toFixed(2) }} zł</span>
         <input
           type="number"
           v-model.number="item.quantity"
           min="1"
           @input="validateQuantity(item)"
         />
-        <button @click="removeItem(item.id)">
+        <button @click="removeItem(item.idDrug)">
           <span class="material-symbols-outlined">delete</span>
         </button>
       </div>
@@ -118,7 +118,7 @@ const removeItem = (id) => {
         >
           <img :src="item.image" :alt="item.name">
           <p class="item-name">{{ item.name }}</p>
-          <p class="item-price">{{ item.price }} zł</p>
+          <p class="item-price">{{ item.price.toFixed(2) }} zł</p>
           <button class="add-button" @click="cart.addToCart(item)">+</button>
         </div>
       </div>

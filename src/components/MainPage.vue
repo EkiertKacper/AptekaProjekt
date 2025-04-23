@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { ref } from 'vue';
 
 const res = ref('')
@@ -29,7 +29,6 @@ const handleSearch = async () => {
     
     const data = await response.json();
     res.value = data.data
-    console.log(res.value);
     if(data.data == ''){
         console.log('load');
         return
@@ -41,11 +40,8 @@ const handleSearch = async () => {
   }
 };
 handleSearch()
-</script>
+</script> -->
 
 <template>
-    <h1 style="margin: 0 13vw ;">To jest nie wazne jak cos</h1>
-    <div style="margin-left: 13vw;" v-for="item in res" :key="item.id">
-        <img style="width: 100px;" :src="item.image" alt="dupa">
-    </div>
+    <h1>Bwdzie main</h1>
 </template>
