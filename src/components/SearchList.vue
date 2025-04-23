@@ -64,7 +64,7 @@ import { watch, ref } from 'vue';
                 <div>
                     <img src="../assets/lek.jpeg" alt="Lek">
                     <h2>{{ res.name }}</h2>
-                    <p>{{ res.price }}zł</p>
+                    <p>{{ res.price.toFixed(2) }}zł</p>
                 </div>
             </li>
         </ul>

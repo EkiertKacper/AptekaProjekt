@@ -38,7 +38,6 @@ const handleSearch = () => {
 
 <style lang="scss">
 .search{
-    position: relative;
     .top-bar {
         padding: 1rem;
         display: flex;
