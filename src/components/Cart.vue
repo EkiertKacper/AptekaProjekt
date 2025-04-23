@@ -1,10 +1,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useCartStore } from "../scripts/cart";
+const cart = useCartStore();
 
 const data = ref("");
 const isDragging = ref(false);
 const startX = ref(0);
 const scrollLeft = ref(0);
+const suggested = ref([]);
 
 const handleMouseDown = (event) => {
   isDragging.value = true;
@@ -42,6 +45,13 @@ const fetchData = async () => {
 
     const fullData = await response.json();
     data.value = fullData.data;
+
+    const notInCart = data.value.filter(
+      product => !cart.items.some(item => item.idDrug === product.idDrug)
+    );
+
+    const shuffled = [...notInCart].sort(() => 0.5 - Math.random());
+    suggested.value = shuffled.slice(0, 8);
   } catch (error) {
     console.log(error);
   }
@@ -50,44 +60,45 @@ const fetchData = async () => {
 onMounted(() => {
   fetchData();
 });
-const addProduct = () => {};
-const itmes = ref([
-  { id: 1, name: "produk1 ", price: 10, quantity: 1 },
-  { id: 2, name: "prdokut2", price: 20, quantity: 1 },
-  { id: 3, name: "produkt3", price: 30, quantity: 1 },
-  { id: 4, name: "produkt4", price: 40, quantity: 1 },
-  { id: 5, name: "produkt5", price: 50, quantity: 1 },
-  { id: 6, name: "produkt6", price: 60, quantity: 1 },
-  
-  
-]);
-
 const validateQuantity = (item) => {
-  if (item.quantity < 1) item.quantity = 1;
+  if (item.quantity < 1) {
+    cart.updateQuantity(item.id, 1);
+  } else {
+    cart.updateQuantity(item.id, item.quantity);
+  }
+};
+
+const removeItem = (id) => {
+  cart.removeFromCart(id);
 };
 </script>
 
 <template>
   <div>
     <div class="cart-header">Koszyk</div>
-    <div class="cart-item" v-for="item in itmes" :key="item">
+    <div class="cart-item" v-for="item in cart.items" :key="item.id">
       <div class="product-info">
         <img src="#" alt="Product" />
-        <div class="product-name">Nazwa Produktu</div>
+        <div class="product-name">{{ item.name }}</div>
       </div>
       <div class="product-actions">
-        <span>Cena</span>
+        <span>{{ item.price }} zł</span>
         <input
           type="number"
           v-model.number="item.quantity"
           min="1"
           @input="validateQuantity(item)"
         />
-        <button><span class="material-symbols-outlined"> delete </span></button>
+        <button @click="removeItem(item.id)">
+          <span class="material-symbols-outlined">delete</span>
+        </button>
       </div>
     </div>
     <div class="cart-footer">
-      <div class="total">Do zapłaty: 00zł</div>
+      <div class="total">
+        Do zapłaty:
+        {{ cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0) }}zł
+      </div>
       <button class="checkout-button">Zamów produkty ></button>
     </div>
 
@@ -100,11 +111,15 @@ const validateQuantity = (item) => {
     >
       <h3>Może jeszcze to Ci się przyda</h3>
       <div class="suggested-items">
-        <div class="suggested-item" v-for="n in 6" :key="n">
+        <div
+          class="suggested-item"
+          v-for="item in suggested"
+          :key="item.idDrug"
+        >
           <div class="image-placeholder"></div>
-          <p class="item-name">Nazwa</p>
-          <p class="item-price">Cena</p>
-          <button class="add-button">+</button>
+          <p class="item-name">{{ item.name }}</p>
+          <p class="item-price">{{ item.price }} zł</p>
+          <button class="add-button" @click="cart.addToCart(item)">+</button>
         </div>
       </div>
     </div>

@@ -2,9 +2,10 @@
 import { defineComponent } from 'vue';
 import { usePageChanger } from '../state/pageChanger';
 import Cart from './Cart.vue';
+import UserPanel from './UserPanel.vue';
 const pageChanger = usePageChanger()
 const handleCart = () => {
-    pageChanger.changePage(defineComponent(Cart))
+    pageChanger.changePage(defineComponent(UserPanel))
 }
 </script>
 
