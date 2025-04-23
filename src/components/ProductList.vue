@@ -1,7 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
+import { useCartStore } from "../scripts/cart";
 
-const data = ref('');
+const data = ref([]);
+const cart = useCartStore();
 
 const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");
@@ -15,13 +17,16 @@ const fetchData = async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token,
+        Authorization: token,
       },
       body: JSON.stringify(requestBody),
     });
 
     const fullData = await response.json();
-    data.value = fullData.data;
+    data.value = (fullData.data || []).map((item) => ({
+      ...item,
+      id: item.idDrug,
+    }));
   } catch (error) {
     console.log(error);
   }
@@ -30,36 +35,35 @@ const fetchData = async () => {
 onMounted(() => {
   fetchData();
 });
-const addProduct = () => {
-}
+const addProduct = (item) => {
+  cart.addToCart(item);
+};
 </script>
 
-
 <template>
-  <main>     
-      <div class="container">
-        <ul>
-          <li v-for="item in data">
-            <img :src="item.image" alt="zdjęcie" />
-            <div class="values">
-              <div class="info">
-                <p>{{ item.name }}</p>
-                <p class="cena">{{ item.price.toFixed(2) }}zł</p>
-              </div>
-
-              <form @submit.prevent="addProduct">
-                <button>+</button>
-              </form> 
+  <main>
+    <div class="container">
+      <ul>
+        <li v-for="item in data" :key="item.id">
+          <img src="../assets/lek.jpeg" alt="zdjęcie" />
+          <div class="values">
+            <div class="info">
+              <p>{{ item.name }}</p>
+              <p class="cena">{{ item.price }}zł</p>
             </div>
-          </li>
-        </ul>
-      </div>
+            <form @submit.prevent="addProduct(item)">
+              <button type="submit">+</button>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
   </main>
 </template>
 
-
 <style scoped lang="scss">
-$green:#81b433;
+// $green: #57FF90;
+$green: #81b433;
 $light-gray: #f8f8f8;
 $shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 $black: #000;
@@ -85,15 +89,15 @@ main {
       font-weight: bold;
       color: $black;
     }
-    button{
+    button {
       width: 5%;
       height: 100%;
       min-width: 40px;
       background-color: transparent;
       border: none;
       cursor: pointer;
-      span{
-        font-size:32px;
+      span {
+        font-size: 32px;
       }
     }
   }
@@ -131,7 +135,7 @@ main {
         box-shadow: $shadow;
       }
 
-      .values {        
+      .values {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -155,7 +159,7 @@ main {
           }
         }
 
-        form{
+        form {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
@@ -168,13 +172,13 @@ main {
             align-items: center;
           }
           select {
-              height: 40px;
-              border: 1px solid #ccc;
-              border-radius: 8px;
-              background-color: white;
-              color: #333;
-              font-size: 16px;
-            }
+            height: 40px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+            color: #333;
+            font-size: 16px;
+          }
 
           button {
             background-color: $green;
@@ -204,5 +208,4 @@ main {
     }
   }
 }
-
-</style> 
+</style>

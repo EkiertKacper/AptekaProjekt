@@ -2,10 +2,11 @@
 import { defineComponent, ref } from 'vue';
 import { usePageChanger } from '../state/pageChanger';
 import Cart from './Cart.vue';
+import UserPanel from './UserPanel.vue';
 import SearchList from './SearchList.vue';
 const pageChanger = usePageChanger()
 const handleCart = () => {
-    pageChanger.changePage(defineComponent(Cart))
+    pageChanger.changePage(defineComponent(UserPanel))
 }
 
 const isInputActive = ref(null)
