@@ -91,52 +91,114 @@ import { watch, ref } from 'vue';
 </template>
 
 <style lang="scss" scoped>
-    main{
-        background-color: #f0f0f0;
-        ul{
+    main {
+        background-color: rgba(240, 240, 240, 0.5); // Półprzezroczyste tło
+        position: relative; // Ustawienie pozycji względem innych elementów
+        z-index: 10; // Wyższy priorytet warstwy, aby przysłaniać inne elementy
+
+        ul {
             display: flex;
-            justify-content: space-around;
+            justify-content: flex-start; // Elementy wyrównane do początku
             align-items: center;
             list-style: none;
-            height: 150px;
-            li{
-                height: 150px;
-                width: 130px;
-                div{
-                    background-color: #fff;
+            height: auto;
+            gap: 20px; // Odstępy między elementami
+            flex-wrap: nowrap; // Elementy w jednym rzędzie
+            overflow-x: auto; // Przewijanie w poziomie
+            padding: 10px;
+            scrollbar-width: thin; // Cieńszy pasek przewijania (dla przeglądarek wspierających)
+            background-color: rgba(255, 255, 255, 0.85); // Półprzezroczyste tło dla wyników
+            border: 0.5px solid black;
+            border-radius: 12px; // Zaokrąglenie rogów
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); // Lekki cień
+            position: absolute; // Ustawienie listy wyników nad innymi elementami
+            top: 0; // Pozycja względem rodzica (main)
+            left: 0;
+            right: 0;
+            z-index: 20; // Wyższy priorytet warstwy niż main
+
+            &::-webkit-scrollbar {
+                height: 8px; // Wysokość paska przewijania
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: #ccc; // Kolor paska przewijania
+                border-radius: 4px;
+            }
+
+            li {
+                flex: 0 0 auto; // Zapobiega rozciąganiu elementów
+                height: 170px;
+                width: 150px;
+
+                div {
+                    background-color: rgba(255, 255, 255, 0.9); // Półprzezroczyste tło dla elementów
                     width: 100%;
                     height: 100%;
+                    border: 0.5px solid black;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                    padding: 8px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: space-around;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-                    img{
+                    &:hover {
+                        transform: translateY(-4px);
+                        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); // Zwiększenie cienia podczas hover
+                    }
+
+                    img {
                         width: 100%;
-                        max-height: 90px;
+                        max-height: 80px;
+                        object-fit: contain;
+                        border-radius: 6px;
+                    }
+
+                    h2 {
+                        font-size: 14px;
+                        font-weight: 600;
+                        margin: 4px 0 2px 0;
+                        text-align: center;
+                        color: #333;
+                    }
+
+                    p {
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: black;
+                        margin: 0;
+                        font-weight: bold;
                     }
                 }
-            }    
+            }
         }
     }
+
     .loading-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
     }
 
     .loading-spinner {
-      border: 4px solid rgba(0, 0, 0, 0.1);
-      border-left-color: #81b433;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #81b433;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
     }
 
     @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
     }
 </style>
