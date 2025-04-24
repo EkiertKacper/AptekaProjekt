@@ -47,7 +47,7 @@ const fetchData = async () => {
     data.value = fullData.data;
 
     const notInCart = data.value.filter(
-      product => !cart.items.some(item => item.idDrug === product.idDrug)
+      (product) => !cart.items.some((item) => item.idDrug === product.idDrug)
     );
 
     const shuffled = [...notInCart].sort(() => 0.5 - Math.random());
@@ -62,21 +62,23 @@ onMounted(() => {
 });
 const validateQuantity = (item) => {
   if (item.quantity < 1) {
-    cart.updateQuantity(item.id, 1);
+    cart.updateQuantity(item.idDrug, 1);
+  } else if (item.quantity > item.amount) {
+    cart.updateQuantity(item.idDrug, item.amount);
   } else {
-    cart.updateQuantity(item.id, item.quantity);
+    cart.updateQuantity(item.idDrug, item.quantity);
   }
 };
 
-const removeItem = (id) => {
-  cart.removeFromCart(id);
+const removeItem = (idDrug) => {
+  cart.removeFromCart(idDrug);
 };
 </script>
 
 <template>
   <div>
     <div class="cart-header">Koszyk</div>
-    <div class="cart-item" v-for="item in cart.items" :key="item.id">
+    <div class="cart-item" v-for="item in cart.items" :key="item.idDrug">
       <div class="product-info">
         <img src="#" alt="Product" />
         <div class="product-name">{{ item.name }}</div>
@@ -87,9 +89,10 @@ const removeItem = (id) => {
           type="number"
           v-model.number="item.quantity"
           min="1"
+          :max="item.amount"
           @input="validateQuantity(item)"
         />
-        <button @click="removeItem(item.id)">
+        <button @click="removeItem(item.idDrug)">
           <span class="material-symbols-outlined">delete</span>
         </button>
       </div>
