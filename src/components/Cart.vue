@@ -28,6 +28,10 @@ const handleMouseUp = () => {
 };
 
 const checkout = async () => {
+  if (cart.items.length === 0) {
+    alert("Koszyk jest pusty. Dodaj produkty przed złożeniem zamówienia.");
+    return;
+  }
   const token = localStorage.getItem("sessionToken");
   for (const item of cart.items) {
     try {
@@ -38,8 +42,8 @@ const checkout = async () => {
           Authorization: token,
         },
         body: JSON.stringify({
-          id: item.idDrug,         
-          amount: item.quantity    
+          id: item.idDrug,
+          amount: item.quantity
         }),
       });
       const result = await response.json();
@@ -52,11 +56,9 @@ const checkout = async () => {
       return;
     }
   }
-  cart.items = []; // wyczyść koszyk po sukcesie
+  cart.items = [];
   alert("Zamówienie złożone!");
 };
-
-
 
 const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");

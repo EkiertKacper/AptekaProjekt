@@ -71,7 +71,7 @@ $shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 $black: #000;
 $gray: #666;
 
-// --- MAIN CONTENT + HEADER ---
+
 main {
   display: flex;
   flex-direction: column;
