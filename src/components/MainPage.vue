@@ -1,47 +1,30 @@
-<!-- <script setup>
-import { ref } from 'vue';
+<script setup>
 
-const res = ref('')
-const res2 = ref('')
-const handleSearch = async () => {
-  const token = localStorage.getItem("sessionToken");
-
-  const requestBody = {
-    page: 0,
-    limit: 999,
-  };
-
-  try {
-    const response = await fetch("http://localhost:3030/api/v1/listDrugs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token,
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Błąd pobierania leków:", errorData);
-      return null;
-    }
-    
-    const data = await response.json();
-    res.value = data.data
-    if(data.data == ''){
-        console.log('load');
-        return
-    }
-    return data.data; 
-  } catch (error) {
-    console.error("Wystąpił błąd podczas wysyłania żądania:", error);
-    return null;
-  }
-};
-handleSearch()
-</script> -->
+</script>
 
 <template>
-    <h1>Bwdzie main</h1>
+  <main>
+    <div class="top">
+      <div class="top-bar">
+
+      </div>
+      <div class="lekarze">
+        <div class="lekarz"></div>
+        <div class="lekarz"></div>
+        <div class="lekarz"></div>  
+      </div>
+    </div>
+    <div class="bottom">
+
+    </div>
+  </main>
 </template>
+<style lang="scss" scoped>
+.top{
+  .top-bar{
+    width: 100%;
+    height: 20vh;
+    border: 1px solid black;
+  }
+}
+</style>
