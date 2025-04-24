@@ -47,9 +47,9 @@ import { watch, ref } from 'vue';
         await new Promise(resolve => setTimeout(() => {
           loading.value = false;
           console.log('xD');
-          resolve(null); // Zwróć null po "ładowaniu"
+          resolve(null); 
         }, 2000));
-        return null; // To zostanie zwrócone dopiero po rozwiązaniu Promise (po 2 sekundach)
+        return null;
       }
       return data.data; 
     } catch (error) {
