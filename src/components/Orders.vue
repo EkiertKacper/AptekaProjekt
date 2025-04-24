@@ -109,19 +109,8 @@ td {
 tbody tr:last-child td {
   border-bottom: none;
 }
-@media (max-width: 1200px) and (min-width: 801px) {
-  table {
-    font-size: 0.95rem;
-  }
-  th, td {
-    padding: 10px 6px;
-  }
-  .pagination {
-    font-size: 0.95rem;
-  }
-}
 
-@media (max-width: 800px) {
+@media (max-width: 1250px) {
   table, thead, tbody, th, td, tr {
     display: block;
     width: 100%;

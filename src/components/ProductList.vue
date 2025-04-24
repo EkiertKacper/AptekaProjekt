@@ -51,7 +51,7 @@ const addProduct = (item) => {
           <div class="values">
             <div class="info">
               <p>{{ item.name }}</p>
-              <p class="cena">{{ item.price }}zł</p>
+              <p class="cena">{{ item.price.toFixed(2) }}zł</p>
             </div>
             <form @submit.prevent="addProduct(item)">
               <button type="submit">+</button>
