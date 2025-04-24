@@ -26,6 +26,38 @@ const handleMouseMove = (event) => {
 const handleMouseUp = () => {
   isDragging.value = false;
 };
+
+const checkout = async () => {
+  const token = localStorage.getItem("sessionToken");
+  for (const item of cart.items) {
+    try {
+      const response = await fetch("http://localhost:3030/api/v1/orderDrug", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          id: item.idDrug,         
+          amount: item.quantity    
+        }),
+      });
+      const result = await response.json();
+      if (result.status !== "success") {
+        alert(`Błąd zamawiania produktu ${item.name}: ${result.data}`);
+        return;
+      }
+    } catch (error) {
+      alert(`Błąd połączenia przy zamawianiu produktu ${item.name}`);
+      return;
+    }
+  }
+  cart.items = []; // wyczyść koszyk po sukcesie
+  alert("Zamówienie złożone!");
+};
+
+
+
 const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");
   const requestBody = {
@@ -47,7 +79,7 @@ const fetchData = async () => {
     data.value = fullData.data;
 
     const notInCart = data.value.filter(
-      product => !cart.items.some(item => item.idDrug === product.idDrug)
+      (product) => !cart.items.some((item) => item.idDrug === product.idDrug)
     );
 
     const shuffled = [...notInCart].sort(() => 0.5 - Math.random());
@@ -62,21 +94,23 @@ onMounted(() => {
 });
 const validateQuantity = (item) => {
   if (item.quantity < 1) {
-    cart.updateQuantity(item.id, 1);
+    cart.updateQuantity(item.idDrug, 1);
+  } else if (item.quantity > item.amount) {
+    cart.updateQuantity(item.idDrug, item.amount);
   } else {
-    cart.updateQuantity(item.id, item.quantity);
+    cart.updateQuantity(item.idDrug, item.quantity);
   }
 };
 
-const removeItem = (id) => {
-  cart.removeFromCart(id);
+const removeItem = (idDrug) => {
+  cart.removeFromCart(idDrug);
 };
 </script>
 
 <template>
   <div>
     <div class="cart-header">Koszyk</div>
-    <div class="cart-item" v-for="item in cart.items" :key="item.id">
+    <div class="cart-item" v-for="item in cart.items" :key="item.idDrug">
       <div class="product-info">
         <img :src="item.image" alt="Product" />
         <div class="product-name">{{ item.name }}</div>
@@ -87,6 +121,7 @@ const removeItem = (id) => {
           type="number"
           v-model.number="item.quantity"
           min="1"
+          :max="item.amount"
           @input="validateQuantity(item)"
         />
         <button @click="removeItem(item.idDrug)">
@@ -99,7 +134,7 @@ const removeItem = (id) => {
         Do zapłaty:
         {{ cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2) }}zł
       </div>
-      <button class="checkout-button">Zamów produkty ></button>
+      <button class="checkout-button" @click="checkout">Zamów produkty ></button>
     </div>
 
     <div
@@ -264,6 +299,7 @@ $gray: #666;
   .suggested-items {
     display: flex;
     gap: 20px;
+    
 
     .suggested-item {
       flex: 0 0 auto;
@@ -335,13 +371,14 @@ $gray: #666;
       .suggested-item {
         width: 140px;
         padding: 10px;
+        
 
         .image-placeholder {
           height: 120px;
         }
 
         .item-name {
-          font-size: 1.5rem;
+          font-size: 1.1rem;
         }
 
         .item-price {

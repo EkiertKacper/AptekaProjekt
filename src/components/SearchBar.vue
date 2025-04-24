@@ -6,7 +6,7 @@ import UserPanel from './UserPanel.vue';
 import SearchList from './SearchList.vue';
 const pageChanger = usePageChanger()
 const handleCart = () => {
-    pageChanger.changePage(defineComponent(UserPanel))
+    pageChanger.changePage(defineComponent(Cart))
 }
 
 const isInputActive = ref(null)

@@ -23,10 +23,12 @@ const fetchData = async () => {
     });
 
     const fullData = await response.json();
-    data.value = (fullData.data || []).map((item) => ({
-      ...item,
-      id: item.idDrug,
-    }));
+data.value = (fullData.data || [])
+  .filter(item => item.amount > 0)
+  .map(item => ({
+    ...item,
+    id: item.idDrug,
+  }));
   } catch (error) {
     console.log(error);
   }

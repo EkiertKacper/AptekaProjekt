@@ -6,11 +6,13 @@ export const useCartStore = defineStore('cart', {
   }),
   actions: {
     addToCart(product) {
-      const found = this.items.find(item => item.idDrug === product.idDrug)
+      const found = this.items.find(item => item.idDrug === product.idDrug);
       if (found) {
-        found.quantity += 1
+        if (found.quantity < found.amount) {
+          found.quantity += 1;
+        }
       } else {
-        this.items.push({ ...product, quantity: 1 })
+        this.items.push({ ...product, quantity: 1 });
       }
     },
     removeFromCart(productId) {
@@ -19,7 +21,7 @@ export const useCartStore = defineStore('cart', {
     updateQuantity(productId, quantity) {
       const found = this.items.find(item => item.idDrug === productId)
       if (found) {
-        found.quantity = Math.max(1, quantity)
+        found.quantity = Math.max(1, Math.min(quantity, found.amount))
       }
     }
   }
