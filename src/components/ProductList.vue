@@ -9,7 +9,7 @@ const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");
   const requestBody = {
     page: 0,
-    limit: 10,
+    limit: 100,
   };
 
   try {
@@ -45,7 +45,7 @@ const addProduct = (item) => {
     <div class="container">
       <ul>
         <li v-for="item in data" :key="item.id">
-          <img src="../assets/lek.jpeg" alt="zdjęcie" />
+          <img :src="item.image" alt="zdjęcie" />
           <div class="values">
             <div class="info">
               <p>{{ item.name }}</p>

@@ -23,8 +23,8 @@
 
 <template>
     <SearchBar v-if="isLogged" :style="[margin]"/>
-    <Navbar :isLargeScreen="isLargeScreen" v-if="isLogged"/>
-    <LogPage v-if="!isLogged" @logged="()=>isLogged = true"/> 
+    <Navbar :isLargeScreen="isLargeScreen" v-if="isLogged" @logout="()=>isLogged=!isLogged"/>
+    <LogPage v-if="!isLogged" @logged="()=>isLogged = !isLogged"/> 
     <component :style="[margin]" v-if="isLogged" :is="pageChanger.currentPage"></component>
 </template>
 <style>

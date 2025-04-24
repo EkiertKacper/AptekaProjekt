@@ -80,11 +80,11 @@ const removeItem = (idDrug) => {
     <div class="cart-header">Koszyk</div>
     <div class="cart-item" v-for="item in cart.items" :key="item.idDrug">
       <div class="product-info">
-        <img src="#" alt="Product" />
+        <img :src="item.image" alt="Product" />
         <div class="product-name">{{ item.name }}</div>
       </div>
       <div class="product-actions">
-        <span>{{ item.price }} zł</span>
+        <span>{{ item.price.toFixed(2) }} zł</span>
         <input
           type="number"
           v-model.number="item.quantity"
@@ -100,7 +100,7 @@ const removeItem = (idDrug) => {
     <div class="cart-footer">
       <div class="total">
         Do zapłaty:
-        {{ cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0) }}zł
+        {{ cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2) }}zł
       </div>
       <button class="checkout-button">Zamów produkty ></button>
     </div>
@@ -119,9 +119,9 @@ const removeItem = (idDrug) => {
           v-for="item in suggested"
           :key="item.idDrug"
         >
-          <div class="image-placeholder"></div>
+          <img :src="item.image" :alt="item.name">
           <p class="item-name">{{ item.name }}</p>
-          <p class="item-price">{{ item.price }} zł</p>
+          <p class="item-price">{{ item.price.toFixed(2) }} zł</p>
           <button class="add-button" @click="cart.addToCart(item)">+</button>
         </div>
       </div>
@@ -277,10 +277,9 @@ $gray: #666;
       box-shadow: $shadow;
       padding: 15px;
 
-      .image-placeholder {
+      img {
         width: 100%;
         height: 120px;
-        background-color: $gray;
         border-radius: 8px;
         margin-bottom: 10px;
       }
