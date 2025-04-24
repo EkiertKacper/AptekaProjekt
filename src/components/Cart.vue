@@ -26,6 +26,38 @@ const handleMouseMove = (event) => {
 const handleMouseUp = () => {
   isDragging.value = false;
 };
+
+const checkout = async () => {
+  const token = localStorage.getItem("sessionToken");
+  for (const item of cart.items) {
+    try {
+      const response = await fetch("http://localhost:3030/api/v1/orderDrug", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          id: item.idDrug,         
+          amount: item.quantity    
+        }),
+      });
+      const result = await response.json();
+      if (result.status !== "success") {
+        alert(`Błąd zamawiania produktu ${item.name}: ${result.data}`);
+        return;
+      }
+    } catch (error) {
+      alert(`Błąd połączenia przy zamawianiu produktu ${item.name}`);
+      return;
+    }
+  }
+  cart.items = []; // wyczyść koszyk po sukcesie
+  alert("Zamówienie złożone!");
+};
+
+
+
 const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");
   const requestBody = {
@@ -102,7 +134,7 @@ const removeItem = (idDrug) => {
         Do zapłaty:
         {{ cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2) }}zł
       </div>
-      <button class="checkout-button">Zamów produkty ></button>
+      <button class="checkout-button" @click="checkout">Zamów produkty ></button>
     </div>
 
     <div
@@ -267,6 +299,7 @@ $gray: #666;
   .suggested-items {
     display: flex;
     gap: 20px;
+    
 
     .suggested-item {
       flex: 0 0 auto;
@@ -338,13 +371,14 @@ $gray: #666;
       .suggested-item {
         width: 140px;
         padding: 10px;
+        
 
         .image-placeholder {
           height: 120px;
         }
 
         .item-name {
-          font-size: 1.5rem;
+          font-size: 1.1rem;
         }
 
         .item-price {

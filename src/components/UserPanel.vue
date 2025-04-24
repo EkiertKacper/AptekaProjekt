@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import DropdownList from "./DropdownList.vue";
 import Cart from "./Cart.vue";
 import BurgerMenu from "./MenuItems.vue";
+import Order from "./Orders.vue";
 
 const data = ref("");
 
@@ -41,7 +42,7 @@ const addProduct = () => {};
     <div class="container">
       <DropdownList />
       <div class="right-section">
-        <Cart />
+        <Order/>
       </div>
     </div>
   </main>
