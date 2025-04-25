@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useCartStore } from "../scripts/cart";
+import Toast from "./Toast.vue"; 
 
+const toastRef = ref(null);
 const data = ref([]);
 const cart = useCartStore();
 
@@ -39,6 +41,7 @@ onMounted(() => {
 });
 const addProduct = (item) => {
   cart.addToCart(item);
+  toastRef.value.showToast("Dodano do koszyka");
 };
 </script>
 
@@ -61,6 +64,7 @@ const addProduct = (item) => {
       </ul>
     </div>
   </main>
+  <Toast ref="toastRef" />
 </template>
 
 <style scoped lang="scss">
