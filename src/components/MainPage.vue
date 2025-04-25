@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue';
+
 
 </script>
 
@@ -13,9 +15,6 @@
         <div class="lekarz"></div>
         <div class="lekarz"></div>  
       </div>
-    </div>
-    <div class="bottom">
-
     </div>
   </main>
 </template>

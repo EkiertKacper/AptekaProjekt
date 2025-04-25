@@ -3,6 +3,7 @@ import { ref, onMounted, defineComponent } from "vue";
 import { useCartStore } from "../scripts/cart";
 import { usePageChanger } from "../state/pageChanger";
 import ProductPage from "./ProductPage.vue";
+import Toast from "./Toast.vue";
 
 const data = ref([]);
 const cart = useCartStore();
@@ -40,8 +41,21 @@ const fetchData = async () => {
 onMounted(() => {
   fetchData();
 });
+
+const toast = ref(null);
+function showToast (message, status) {
+  toast.value.showToast(message, status);
+};
 const addProduct = (item) => {
-  cart.addToCart(item);
+  const mes = cart.addToCart(item);  
+  switch(mes){
+    case 'positive': 
+      showToast("Dodano do koszyka!", 'positive')
+      break;
+    case 'error':
+      showToast("Nie mamy więcej tego produktu!", 'negative')  
+      break;
+  }
 };
 
 const openProductPage = (itemId) => {
@@ -68,6 +82,7 @@ const openProductPage = (itemId) => {
         </li>
       </ul>
     </div>
+    <Toast ref="toast"/>
   </main>
 </template>
 

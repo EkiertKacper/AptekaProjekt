@@ -127,13 +127,14 @@ const openProductPage = (itemId) => {
       <div class="product-actions">
         <span>{{ item.price.toFixed(2) }} zł</span>
         <input
+        @click.stop
           type="number"
           v-model.number="item.quantity"
           min="1"
           :max="item.amount"
           @input="validateQuantity(item)"
         />
-        <button @click="removeItem(item.idDrug)">
+        <button @click.stop="removeItem(item.idDrug)">
           <span class="material-symbols-outlined">delete</span>
         </button>
       </div>

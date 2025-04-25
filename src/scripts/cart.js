@@ -10,9 +10,13 @@ export const useCartStore = defineStore('cart', {
       if (found) {
         if (found.quantity < found.amount) {
           found.quantity += 1;
+          return 'positive'
+        } else{
+          return 'error'
         }
       } else {
-        this.items.push({ ...product, quantity: ilosc });
+        this.items.push({ ...product, quantity: ilosc })
+        return 'positive'
       }
     },
     removeFromCart(productId) {

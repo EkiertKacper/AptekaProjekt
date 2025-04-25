@@ -1,21 +1,37 @@
 <script setup>
-import { defineComponent, ref, watch, computed } from 'vue';
+import { defineComponent, ref, watch, computed, warn } from 'vue';
 import { usePageChanger } from '../state/pageChanger';
 import ProductList from './ProductList.vue';
+import Toast from './Toast.vue';
 import { useCartStore } from '../scripts/cart';
 
     const pageChanger = usePageChanger()
     const cart = useCartStore()
     const ilosc = ref(1)
-    watch(ilosc, ()=> console.log(ilosc.value), {immediate:true})
 
     const currentProduct = computed(() => pageChanger.currentProps.product);
+    watch(currentProduct, ()=>{console.log(currentProduct.value);})
 
     const goBack = () => {
         pageChanger.changePage(defineComponent(ProductList))
     };
+
+
+    const toast = ref(null);
+    function showToast (message, status) {
+      toast.value.showToast(message, status);
+    };
+
     const addToCart = () => {
-      cart.addToCart(currentProduct.value, ilosc.value)
+      const mes = cart.addToCart(currentProduct.value, ilosc.value)
+      switch(mes){
+        case 'positive': 
+          showToast("Dodano do koszyka!", 'positive')
+          break;
+        case 'error':
+          showToast("Nie mamy więcej tego produktu!", 'negative')  
+          break;
+      }
     }
 </script>
 <template>
@@ -39,6 +55,7 @@ import { useCartStore } from '../scripts/cart';
             </div>    
           </div>
           <button @click="goBack" class="back-button">Powrót na stronę główną</button>
+          <Toast ref="toast"/>
         </div>
     </main>    
 </template>
