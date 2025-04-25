@@ -159,11 +159,12 @@ const openProductPage = (itemId) => {
           class="suggested-item"
           v-for="item in suggested"
           :key="item.idDrug"
+          @click="openProductPage(item.idDrug)"
         >
           <img :src="item.image" :alt="item.name">
           <p class="item-name">{{ item.name }}</p>
           <p class="item-price">{{ item.price.toFixed(2) }} zł</p>
-          <button class="add-button" @click="cart.addToCart(item)">+</button>
+          <button class="add-button" @click.stop="cart.addToCart(item)">+</button>
         </div>
       </div>
     </div>
