@@ -5,14 +5,14 @@ export const useCartStore = defineStore('cart', {
     items: []
   }),
   actions: {
-    addToCart(product) {
+    addToCart(product, ilosc = 1) {
       const found = this.items.find(item => item.idDrug === product.idDrug);
       if (found) {
         if (found.quantity < found.amount) {
           found.quantity += 1;
         }
       } else {
-        this.items.push({ ...product, quantity: 1 });
+        this.items.push({ ...product, quantity: ilosc });
       }
     },
     removeFromCart(productId) {

@@ -1,12 +1,17 @@
 <script setup>
-import { watch, ref } from 'vue';
+import { watch, ref, defineComponent } from 'vue';
+import { usePageChanger } from '../state/pageChanger';
+import ProductPage from './ProductPage.vue';
 
+  const pageChanger = usePageChanger()
     const props = defineProps({
         query: String
     })
     const loading = ref(false)
     const emptySearch = ref(true)
     const first = ref(false)
+    const isSearchListActive = ref(false)
+    const emit = defineEmits(['isSearchListActive'])
 
     const handleSearch = async (drugName) => {
     const token = localStorage.getItem("sessionToken");
@@ -42,6 +47,8 @@ import { watch, ref } from 'vue';
 
 
       const data = await response.json();
+      const newData = data.data.filter(item => item.amount !== 0);
+      data.data = newData;
       if(data.data && data.data.length === 0){
         loading.value = true;
         await new Promise(resolve => setTimeout(() => {
@@ -62,12 +69,16 @@ import { watch, ref } from 'vue';
         first.value = true
         results.value = await handleSearch(props.query)
     });
+    const openProductPage = (itemId) => {
+      const selectedItem = results.value.find(item => item.idDrug === itemId);
+      pageChanger.changePage(defineComponent(ProductPage), {product: selectedItem})
+    }
 </script>
 
 <template>
-    <main v-if="first">
+    <main v-if="first" @mouseenter="emit('isSearchListActive', true)" @mouseleave="emit('isSearchListActive', false)">
         <ul v-if="results != undefined && !loading">
-            <li v-for="res in results">
+            <li v-for="res in results" @click="openProductPage(res.idDrug)">
                 <div>
                     <img :src="res.image" alt="Lek">
                     <h2>{{ res.name }}</h2>

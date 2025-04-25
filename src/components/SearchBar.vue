@@ -5,6 +5,9 @@ import Cart from './Cart.vue';
 import UserPanel from './UserPanel.vue';
 import SearchList from './SearchList.vue';
 import { useMenuPage } from '../state/menuPage';
+
+
+const isSearchListActive = ref(false)
 const pageChanger = usePageChanger()
 const menu = useMenuPage()
 const handleCart = () => {
@@ -35,7 +38,7 @@ const handleSearch = () => {
                 </span>
             </div>
         </div>
-        <SearchList v-if="isInputActive" :query="query"/>
+        <SearchList v-if="isInputActive || isSearchListActive" :query="query" @isSearchListActive="()=>isSearchListActive = !isSearchListActive"/>
     </div>
 
 </template>

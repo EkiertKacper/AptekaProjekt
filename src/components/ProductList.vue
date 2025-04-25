@@ -62,7 +62,7 @@ const openProductPage = (itemId) => {
               <p class="cena">{{ item.price.toFixed(2) }}zł</p>
             </div>
             <form @submit.prevent="addProduct(item)">
-              <button type="submit">+</button>
+              <button type="submit" @click.stop>+</button>
             </form>
           </div>
         </li>
