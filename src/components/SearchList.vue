@@ -108,9 +108,9 @@ import { watch, ref } from 'vue';
             padding: 10px;
             scrollbar-width: thin; // Cieńszy pasek przewijania (dla przeglądarek wspierających)
             background-color: rgba(255, 255, 255, 0.85); // Półprzezroczyste tło dla wyników
-            border: 0.5px solid black;
+            border: 0.5px solid #999;
             border-radius: 12px; // Zaokrąglenie rogów
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); // Lekki cień
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); // Lekki cień
             position: absolute; // Ustawienie listy wyników nad innymi elementami
             top: 0; // Pozycja względem rodzica (main)
             left: 0;
@@ -135,7 +135,7 @@ import { watch, ref } from 'vue';
                     background-color: rgba(255, 255, 255, 0.9); // Półprzezroczyste tło dla elementów
                     width: 100%;
                     height: 100%;
-                    border: 0.5px solid black;
+                    border: 0.5px solid #999;
                     border-radius: 12px;
                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
                     padding: 8px;

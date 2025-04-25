@@ -1,11 +1,13 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineComponent } from "vue";
 import DropdownList from "./DropdownList.vue";
 import Cart from "./Cart.vue";
 import BurgerMenu from "./MenuItems.vue";
 import Order from "./Orders.vue";
+import { useMenuPage } from "../state/menuPage";
 
 const data = ref("");
+const menuPage = useMenuPage()
 
 const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");
@@ -34,6 +36,8 @@ const fetchData = async () => {
 onMounted(() => {
   fetchData();
 });
+
+
 const addProduct = () => {};
 </script>
 
@@ -42,7 +46,7 @@ const addProduct = () => {};
     <div class="container">
       <DropdownList />
       <div class="right-section">
-        <Order/>
+        <component :is="menuPage.currentMenuPage"/>
       </div>
     </div>
   </main>

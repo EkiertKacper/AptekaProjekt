@@ -31,10 +31,7 @@ const currentPage = ref(pageChanger.currentPage)
 const prev = ref('')
 const switcher = (e) => {
     if(prev.value){
-        if(prev.value === e.currentTarget){
-            prev.value.classList.toggle("checked")
-            prev.value = ''
-        } else{
+        if(prev.value !== e.currentTarget){
             prev.value.classList.toggle("checked")
             const item = e.currentTarget
             item.classList.toggle("checked")
