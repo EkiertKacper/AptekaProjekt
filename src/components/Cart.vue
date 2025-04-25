@@ -3,6 +3,7 @@ import { ref, onMounted, defineComponent } from "vue";
 import { useCartStore } from "../scripts/cart";
 import { usePageChanger } from "../state/pageChanger";
 import ProductPage from "./ProductPage.vue";
+
 import Toast from "./Toast.vue"; 
 
 const cart = useCartStore();

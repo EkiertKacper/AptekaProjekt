@@ -37,11 +37,13 @@ const groupedOrders = computed(() => {
   return Object.entries(groups).map(([orderId, items]) => ({
     orderId,
     items
-  }));
+  })).reverse()
+
 });
 
 onMounted(() => {
   fetchOrders();
+
 });
 </script>
 

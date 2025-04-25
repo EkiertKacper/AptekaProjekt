@@ -10,7 +10,6 @@ import { useCartStore } from '../scripts/cart';
     const ilosc = ref(1)
 
     const currentProduct = computed(() => pageChanger.currentProps.product);
-    watch(currentProduct, ()=>{console.log(currentProduct.value);})
 
     const goBack = () => {
         pageChanger.changePage(defineComponent(ProductList))
@@ -33,6 +32,13 @@ import { useCartStore } from '../scripts/cart';
           break;
       }
     }
+    const validateQuantity = () => {
+      if(!ilosc.value){
+        ilosc.value = 1
+      } else{
+        ilosc.value = Math.max(1, Math.min(ilosc.value, currentProduct.value.amount))
+      }
+  };
 </script>
 <template>
     <main>
@@ -49,7 +55,15 @@ import { useCartStore } from '../scripts/cart';
 
               <div class="quantity-selector">
                 <label for="quantity">Ilość:</label>
-                <input v-model.number="ilosc" type="number" id="quantity" value="1" min="1" :max="currentProduct.amount" class="quantity-input">
+                <input
+        @click.stop
+          type="number"
+          v-model.number="ilosc"
+          min="1"
+          :max="currentProduct.amount"
+          @input="validateQuantity"
+          class="quantity-input"
+        />
               </div>   
               <button @click="addToCart" class="addToCart">Dodaj do koszyka</button>     
             </div>    
