@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 const orders = ref([]);
 const page = ref(0);
 const total = ref(0);
@@ -15,7 +15,7 @@ const fetchOrders = async () => {
       },
       body: JSON.stringify({
         page: page.value,
-        limit: 50
+        limit: 50,
       }),
     });
     const result = await response.json();
@@ -26,7 +26,19 @@ const fetchOrders = async () => {
   }
 };
 
-
+const groupedOrders = computed(() => {
+  // Grupowanie po orderId
+  const groups = {};
+  for (const order of orders.value) {
+    if (!groups[order.orderId]) groups[order.orderId] = [];
+    groups[order.orderId].push(order);
+  }
+  // Zamień na tablicę [{orderId, items: [...]}, ...]
+  return Object.entries(groups).map(([orderId, items]) => ({
+    orderId,
+    items
+  }));
+});
 
 onMounted(() => {
   fetchOrders();
@@ -36,112 +48,85 @@ onMounted(() => {
 <template>
   <div>
     <h2>Historia zamówień</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>ID zamówienia</th>
-          <th>Ilość</th>
-          <th>Nazwa leku</th>
-          <th>Dawka</th>
-          <th>Cena</th>
-          <th>Cena końcowa</th>
-          <th>Typ</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="order in orders" :key="order.id">
-            <td data-label="ID zamówienia">{{ order.id }}</td>
-<td data-label="Ilość">{{ order.purchase_amount }}</td>
-<td data-label="Nazwa leku">{{ order.drug_name }}</td>
-<td data-label="Dawka">{{ order.dose }}</td>
-<td data-label="Cena">{{ order.price.toFixed(2) }}</td>
-<td data-label="Cena końcowa">{{ (order.price*order.purchase_amount).toFixed(2)}}</td>
-<td data-label="Typ">{{ order.type }}</td>
-        </tr>
-      </tbody>
-    </table>
-    
+    <div v-for="group in groupedOrders" :key="group.orderId" class="order-block">
+  <div class="order-header">
+    <span class="order-title">Zamówienie #{{ group.orderId }}</span>
+  </div>
+  <div class="order-total">
+    <b>Łączna cena zamówienia:</b>
+    {{
+      group.items.reduce(
+        (sum, order) => sum + order.price * order.purchase_amount,
+        0
+      ).toFixed(2)
+    }} zł
+  </div>
+  <div class="products-list">
+    <div v-for="order in group.items" :key="order.id" class="product-card">
+      <div><b>Nazwa leku:</b> {{ order.drug_name }}</div>
+      <div><b>Dawka:</b> {{ order.dose }}mg</div>
+      <div><b>Ilość:</b> {{ order.purchase_amount }}</div>
+      <div><b>Cena za sztukę:</b> {{ order.price.toFixed(2) }} zł</div>
+      <div><b>Typ:</b> {{ order.type }}</div>
+    </div>
+  </div>
+</div>
   </div>
 </template>
 
 <style scoped lang="scss">
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-top: 24px;
-  font-size: 1rem;
+.order-block {
   background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 14px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  margin-bottom: 32px;
+  padding: 24px 28px;
 }
 
-th, td {
-  padding: 14px 12px;
-  text-align: left;
+.order-header {
+  border-bottom: 2px solid #81b433;
+  margin-bottom: 18px;
+  padding-bottom: 8px;
 }
-
-th {
-  background: #81b433;
-  color: #fff;
+.order-total {
+  margin: 12px 0 18px 0;
+  font-size: 1.1rem;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid #6e9e2e;
+  color: #333;
 }
 
-tr {
-  transition: background 0.2s;
+.order-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #81b433;
 }
 
-tbody tr:nth-child(even) {
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.product-card {
   background: #f8f8f8;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  padding: 16px 20px;
+  min-width: 220px;
+  margin-bottom: 10px;
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-tbody tr:hover {
-  background: #e6f4d7;
-}
-
-td {
-  border-bottom: 1px solid #e0e0e0;
-}
-
-tbody tr:last-child td {
-  border-bottom: none;
-}
-
-@media (max-width: 1250px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
-    width: 100%;
+@media (max-width: 900px) {
+  .products-list {
+    flex-direction: column;
+    gap: 12px;
   }
-  thead tr {
-    display: none;
-  }
-  tbody tr {
-    margin-bottom: 18px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-    padding: 10px 0;
-  }
-  td {
-    border: none;
-    position: relative;
-    padding-left: 50%;
-    min-height: 36px;
-    text-align: left;
-    background: none;
-  }
-  td:before {
-    position: absolute;
-    left: 12px;
-    top: 12px;
-    width: 45%;
-    white-space: nowrap;
-    font-weight: bold;
-    color: #81b433;
-    content: attr(data-label);
+  .order-block {
+    padding: 16px 8px;
   }
 }
 </style>

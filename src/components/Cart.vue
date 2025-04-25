@@ -3,6 +3,8 @@ import { ref, onMounted, defineComponent } from "vue";
 import { useCartStore } from "../scripts/cart";
 import { usePageChanger } from "../state/pageChanger";
 import ProductPage from "./ProductPage.vue";
+import Toast from "./Toast.vue"; 
+
 const cart = useCartStore();
 
 const data = ref("");
@@ -10,56 +12,40 @@ const isDragging = ref(false);
 const startX = ref(0);
 const scrollLeft = ref(0);
 const suggested = ref([]);
-
-const handleMouseDown = (event) => {
-  isDragging.value = true;
-  startX.value = event.pageX - event.currentTarget.offsetLeft;
-  scrollLeft.value = event.currentTarget.scrollLeft;
-};
-
-const handleMouseMove = (event) => {
-  if (!isDragging.value) return;
-  event.preventDefault();
-  const x = event.pageX - event.currentTarget.offsetLeft;
-  const walk = x - startX.value;
-  event.currentTarget.scrollLeft = scrollLeft.value - walk;
-};
-
-const handleMouseUp = () => {
-  isDragging.value = false;
-};
+const toastRef = ref(null); 
 
 const checkout = async () => {
+  if (cart.items.length === 0) {
+    toastRef.value.showToast("Koszyk jest pusty. Dodaj produkty przed złożeniem zamówienia.", "error");
+    return;
+  }
   const token = localStorage.getItem("sessionToken");
-  for (const item of cart.items) {
-    try {
-      const response = await fetch("http://localhost:3030/api/v1/orderDrug", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify({
-          id: item.idDrug,         
-          amount: item.quantity    
-        }),
-      });
-      const result = await response.json();
-      if (result.status !== "success") {
-        alert(`Błąd zamawiania produktu ${item.name}: ${result.data}`);
-        return;
-      }
-    } catch (error) {
-      alert(`Błąd połączenia przy zamawianiu produktu ${item.name}`);
+  try {
+    const response = await fetch("http://localhost:3030/api/v1/orderDrug", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify({
+        items: cart.items.map(item => ({
+          id: item.idDrug,
+          amount: item.quantity
+        }))
+      }),
+    });
+    const result = await response.json();
+    if (result.status !== "success") {
+      toastRef.value.showToast(`Błąd zamawiania: ${result.data}`, "error");
       return;
     }
+    cart.items = [];
+    toastRef.value.showToast("Złożono zamówienie", "success");
+  } catch (error) {
+    toastRef.value.showToast("Błąd połączenia przy zamawianiu", "error");
   }
-  cart.items = []; // wyczyść koszyk po sukcesie
-  alert("Zamówienie złożone!");
 };
-
-
-
+console.log(cart.items);
 const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");
   const requestBody = {
@@ -147,7 +133,7 @@ const openProductPage = (itemId) => {
       <button class="checkout-button" @click="checkout">Zamów produkty ></button>
     </div>
 
-    <div
+    <!-- <div
       class="horizontal-scroll"
       @mousedown="handleMouseDown"
       @mousemove="handleMouseMove"
@@ -168,7 +154,8 @@ const openProductPage = (itemId) => {
           <button class="add-button" @click.stop="cart.addToCart(item)">+</button>
         </div>
       </div>
-    </div>
+    </div> -->
+    <Toast ref="toastRef" />
   </div>
 </template>
 

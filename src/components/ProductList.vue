@@ -4,7 +4,9 @@ import { useCartStore } from "../scripts/cart";
 import { usePageChanger } from "../state/pageChanger";
 import ProductPage from "./ProductPage.vue";
 import Toast from "./Toast.vue";
+import Toast from "./Toast.vue"; 
 
+const toastRef = ref(null);
 const data = ref([]);
 const cart = useCartStore();
 const pageChanger = usePageChanger()
@@ -47,21 +49,9 @@ function showToast (message, status) {
   toast.value.showToast(message, status);
 };
 const addProduct = (item) => {
-  const mes = cart.addToCart(item);  
-  switch(mes){
-    case 'positive': 
-      showToast("Dodano do koszyka!", 'positive')
-      break;
-    case 'error':
-      showToast("Nie mamy więcej tego produktu!", 'negative')  
-      break;
-  }
+  cart.addToCart(item);
+  toastRef.value.showToast("Dodano do koszyka");
 };
-
-const openProductPage = (itemId) => {
-  const selectedItem = data.value.find(item => item.id === itemId);
-  pageChanger.changePage(defineComponent(ProductPage), {product: selectedItem})
-}
 </script>
 
 <template>
@@ -84,6 +74,7 @@ const openProductPage = (itemId) => {
     </div>
     <Toast ref="toast"/>
   </main>
+  <Toast ref="toastRef" />
 </template>
 
 <style scoped lang="scss">
@@ -94,7 +85,7 @@ $shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 $black: #000;
 $gray: #666;
 
-// --- MAIN CONTENT + HEADER ---
+
 main {
   display: flex;
   flex-direction: column;

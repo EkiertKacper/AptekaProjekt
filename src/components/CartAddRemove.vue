@@ -20,7 +20,7 @@
      methods:{
         async addOrRemove(number){
             this.loading = true
-            if(number == 1){ //add
+            if(number == 1){
                 if(this.qty < 10){
                     this.qty++
                     this.product.qty = this.qty
@@ -30,7 +30,7 @@
                     toast.warning('Osiągnąłeś limit')
                 }
             }
-            if( number == -1){ //remove
+            if( number == -1){
                 if(this.qty > 1){
                     this.qty--
                     this.product.qty = this.qty

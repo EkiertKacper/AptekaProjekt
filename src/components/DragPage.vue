@@ -3,25 +3,6 @@
 
 <template>
 
-    
-    <!-- <div class="nav__container">
-        <div class="nav__logo">
-            <img src="../assets/logo.png" alt="logo" />
-        </div>
-        <div class="nav__menu">
-            <ul>
-                <li><a href="#">O nas</a></li>
-                <li><a href="#">Produkty</a></li>
-                <li><a href="#">Kontakt</a></li>
-            </ul>
-        </div>
-        <div class="copy">
-            <p>Wszelkie prawa zastrzeżone &copy; 2023</p>
-        </div>
-    </div> -->
-    
-
-
     <header>
         <div class="lol"></div>
     </header>

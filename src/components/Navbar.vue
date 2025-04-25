@@ -121,7 +121,7 @@ const logout = () => {
     $mint: #6b9922;
     .mobileNav{
         transition: transform 0.3s ease-in-out;
-        transform: translateY(0); // domyślnie widoczny
+        transform: translateY(0);
         width: 100vw;
         border-radius: 1rem 1rem 0 0;
         display: flex;
@@ -208,9 +208,7 @@ const logout = () => {
 
         .logo-text {
           display: none;
-          // font-size: 1.8rem;
-          // font-weight: bold;
-          // color: #1a3d2f;
+        
         }
       }
 

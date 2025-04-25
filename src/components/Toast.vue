@@ -1,79 +1,56 @@
-  <script setup>
-  import { ref } from 'vue';
-  
-  const activeToasts = ref([]);
-  let id = 0;
-  const showToast = (message, type, duration = 3000) => {
-    const newToast = {
-      message,
-      type,
-      id: id++,      
-    };
-    activeToasts.value.push(newToast);
-    if(activeToasts.value.length>3){
-        activeToasts.value.splice(0,1)
-    }
-      
-    setTimeout(() => {
-        activeToasts.value = activeToasts.value.filter(toast => toast.id !== newToast.id);
-    }, duration);
-  };
-  
-  defineExpose({
-    showToast
-  });
-  </script>
-
 <template>
-    <div class="toast-container">
-      <div
-        v-for="toast in activeToasts"
-        :key="toast.id"
-        class="toast"
-        :class="toast.type"
-      >
-        {{ toast.message }}
-      </div>
+  <transition name="fade">
+    <div v-if="visible" :class="['toast', toastType]">
+      {{ message }}
     </div>
-  </template>
-  
-  <style scoped>
-  .toast-container {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    z-index: 9999;
-    padding: 0 20px 20px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .toast {
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    opacity: 0;
-    animation: slide-up 0.3s ease-out forwards, fade-out 0.3s ease-in 2.7s forwards;
-    min-width: 200px;
-    box-sizing: border-box;
-  }
-  .toast.positive{
-    background-color: #81b433;
-  }
-  .toast.negative{
-    background-color: red;
-  }
+  </transition>
+</template>
 
-  
-  @keyframes slide-up {
-    from { transform: translateY(50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  
-  @keyframes fade-out {
-    from { opacity: 1; }
-    to { opacity: 0; }
-  }
-  </style>
+<script setup>
+import { ref } from "vue";
+const visible = ref(false);
+const message = ref("");
+const toastType = ref("success");
+
+function showToast(msg = "Powiadomienie", type = "success") {
+  message.value = msg;
+  toastType.value = type;
+  visible.value = true;
+  setTimeout(() => {
+    visible.value = false;
+  }, 2000);
+}
+
+defineExpose({ showToast });
+</script>
+
+<style scoped>
+.toast {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  color: #fff;
+  padding: 18px 24px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+  z-index: 10000;
+  opacity: 0.95;
+  border: 2px solid #386641;
+  background: rgba(129, 180, 51, 0.85); /* domyślnie zielony */
+}
+.toast.error {
+  background: rgba(200, 50, 50, 0.92);
+  border-color: #a10000;
+}
+.toast.success {
+  background: rgba(129, 180, 51, 0.85);
+  border-color: #386641;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+</style>

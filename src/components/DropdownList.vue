@@ -1,27 +1,24 @@
 <script setup>
 import { ref } from "vue";
-import MenuItems from "./MenuItems.vue"; // Import komponentu MenuItems
+import MenuItems from "./MenuItems.vue"; 
 
-const isMenuOpen = ref(false); // Kontroluje widoczność menu hamburgerowego
+const isMenuOpen = ref(false); 
 
 const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value; // Przełącz widoczność menu
+  isMenuOpen.value = !isMenuOpen.value; 
 };
 </script>
 
 <template>
   <div>
-    <!-- Przycisk hamburgera widoczny tylko w wersji mobilnej -->
     <button class="hamburger-button" @click="toggleMenu">
       <span class="material-icons">menu</span>
     </button>
 
-    <!-- Menu rozwijane w wersji mobilnej -->
     <div v-if="isMenuOpen" class="menu-overlay">
       <MenuItems />
     </div>
 
-    <!-- Obecna struktura dla wersji desktopowej -->
     <div class="left-section">
       <MenuItems />
     </div>
@@ -36,7 +33,6 @@ $light-gray: #f8f8f8;
 $shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 $black: #000;
 
-/* Styl przycisku hamburgera */
 .hamburger-button {
  display: none;
   position: fixed;
