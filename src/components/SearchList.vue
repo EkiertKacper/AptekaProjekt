@@ -98,6 +98,7 @@ main {
   position: relative;
   z-index: 10;
 
+
   ul {
     display: flex;
     justify-content: flex-start;
@@ -121,6 +122,63 @@ main {
 
     &::-webkit-scrollbar {
       height: 8px;
+
+
+            &::-webkit-scrollbar-thumb {
+                background-color: #ccc; 
+                border-radius: 4px;
+            }
+
+            li {
+                flex: 0 0 auto; 
+                height: 170px;
+                width: 150px;
+
+                div {
+                    background-color: rgba(255, 255, 255, 0.9);
+                    width: 100%;
+                    height: 100%;
+                    border: 0.5px solid #999;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                    padding: 8px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: space-around;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+                    &:hover {
+                        transform: translateY(-4px);
+                        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); // Zwiększenie cienia podczas hover
+                    }
+
+                    img {
+                        width: 100%;
+                        max-height: 80px;
+                        object-fit: contain;
+                        border-radius: 6px;
+                    }
+
+                    h2 {
+                        font-size: 14px;
+                        font-weight: 600;
+                        margin: 4px 0 2px 0;
+                        text-align: center;
+                        color: #333;
+                    }
+
+                    p {
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: black;
+                        margin: 0;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
     }
 
     &::-webkit-scrollbar-thumb {
@@ -177,7 +235,7 @@ main {
       }
     }
   }
-}
+
 
 .loading-container {
   display: flex;

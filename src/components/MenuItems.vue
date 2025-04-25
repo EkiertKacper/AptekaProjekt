@@ -1,8 +1,28 @@
+<script setup>
+import { defineComponent } from 'vue';
+import { useMenuPage } from '../state/menuPage';
+import Cart from './Cart.vue';
+import Orders from './Orders.vue';
+const menuPage = useMenuPage()
+  const userPanelMenuOption = (e) => {
+    switch(e.target.id) {
+      case 'konto':
+        menuPage.changePage(defineComponent(Cart)) // Do zmiany jak powstranie user
+        break;
+      case 'zamowienia':
+        menuPage.changePage(defineComponent(Orders))  
+        break;
+      case 'koszyk':
+        menuPage.changePage(defineComponent(Cart))  
+    }
+  }
+</script>
+
 <template>
   <ul>
-    <li>Konto</li>
-    <li>Zamówienia</li>
-    <li>Koszyk</li>
+    <li @click="userPanelMenuOption" id="konto">Konto</li>
+    <li @click="userPanelMenuOption" id="zamowienia">Zamówienia</li>
+    <li @click="userPanelMenuOption" id="koszyk">Koszyk</li>
   </ul>
 </template>
 

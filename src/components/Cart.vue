@@ -9,23 +9,23 @@ const startX = ref(0);
 const scrollLeft = ref(0);
 const suggested = ref([]);
 
-const handleMouseDown = (event) => {
-  isDragging.value = true;
-  startX.value = event.pageX - event.currentTarget.offsetLeft;
-  scrollLeft.value = event.currentTarget.scrollLeft;
-};
+//const handleMouseDown = (event) => {
+ // isDragging.value = true;
+  //startX.value = event.pageX - event.currentTarget.offsetLeft;
+  //scrollLeft.value = event.currentTarget.scrollLeft;
+//};
 
-const handleMouseMove = (event) => {
-  if (!isDragging.value) return;
-  event.preventDefault();
-  const x = event.pageX - event.currentTarget.offsetLeft;
-  const walk = x - startX.value;
-  event.currentTarget.scrollLeft = scrollLeft.value - walk;
-};
+//const handleMouseMove = (event) => {
+ // if (!isDragging.value) return;
+ // event.preventDefault();
+ // const x = event.pageX - event.currentTarget.offsetLeft;
+ // const walk = x - startX.value;
+ // event.currentTarget.scrollLeft = scrollLeft.value - walk;
+//};
 
-const handleMouseUp = () => {
-  isDragging.value = false;
-};
+//const handleMouseUp = () => {
+  //isDragging.value = false;
+//};
 
 const checkout = async () => {
   if (cart.items.length === 0) {
@@ -139,7 +139,7 @@ const removeItem = (idDrug) => {
       <button class="checkout-button" @click="checkout">Zamów produkty ></button>
     </div>
 
-    <div
+    <!-- <div
       class="horizontal-scroll"
       @mousedown="handleMouseDown"
       @mousemove="handleMouseMove"
@@ -159,7 +159,7 @@ const removeItem = (idDrug) => {
           <button class="add-button" @click="cart.addToCart(item)">+</button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
