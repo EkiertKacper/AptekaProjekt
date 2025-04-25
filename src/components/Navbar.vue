@@ -4,6 +4,8 @@ import { usePageChanger } from "../state/pageChanger"
 import MainPage from "./MainPage.vue";
 import ProductList from './ProductList.vue'
 import UserPanel from "./UserPanel.vue";
+import Account from "./Account.vue";
+import { useMenuPage } from "../state/menuPage";
 
 const props = defineProps({
   isLargeScreen: {
@@ -27,7 +29,7 @@ onMounted(() => {
 });
 
 const pageChanger = usePageChanger()
-const currentPage = ref(pageChanger.currentPage)
+const menuPage = useMenuPage()
 const prev = ref('')
 const switcher = (e) => {
     if(prev.value){
@@ -50,7 +52,9 @@ const switcher = (e) => {
             pageChanger.changePage(defineComponent(ProductList))
             break;
         case "ustawienia":
+            menuPage.changePage(defineComponent(Account))
             pageChanger.changePage(defineComponent(UserPanel))    
+            break;
     }
 }
 const emit = defineEmits(['logout'])
