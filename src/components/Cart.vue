@@ -1,6 +1,8 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineComponent } from "vue";
 import { useCartStore } from "../scripts/cart";
+import { usePageChanger } from "../state/pageChanger";
+import ProductPage from "./ProductPage.vue";
 const cart = useCartStore();
 
 const data = ref("");
@@ -105,12 +107,19 @@ const validateQuantity = (item) => {
 const removeItem = (idDrug) => {
   cart.removeFromCart(idDrug);
 };
+
+
+const pageChanger = usePageChanger()
+const openProductPage = (itemId) => {
+  const selectedItem = data.value.find(item => item.idDrug === itemId);
+  pageChanger.changePage(defineComponent(ProductPage), {product: selectedItem})
+}
 </script>
 
 <template>
   <div>
     <div class="cart-header">Koszyk</div>
-    <div class="cart-item" v-for="item in cart.items" :key="item.idDrug">
+    <div class="cart-item" v-for="item in cart.items" :key="item.idDrug" @click="openProductPage(item.idDrug)">
       <div class="product-info">
         <img :src="item.image" alt="Product" />
         <div class="product-name">{{ item.name }}</div>

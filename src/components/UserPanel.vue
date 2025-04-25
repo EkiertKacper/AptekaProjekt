@@ -63,13 +63,13 @@ main {
   display: flex;
   flex-direction: column;
   background-color: white;
-  min-height: 100vh;
+  min-height: 80vh;
 
   .container {
     display: flex;
     padding: 12px;
     justify-content: space-between;
-    min-height: 95vh;
+    min-height: 90vh;
 
     .right-section {
       flex-grow: 1;

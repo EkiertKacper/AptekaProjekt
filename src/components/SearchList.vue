@@ -46,7 +46,6 @@ import { watch, ref } from 'vue';
         loading.value = true;
         await new Promise(resolve => setTimeout(() => {
           loading.value = false;
-          console.log('xD');
           resolve(null); 
         }, 2000));
         return null;

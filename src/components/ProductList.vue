@@ -1,9 +1,12 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineComponent } from "vue";
 import { useCartStore } from "../scripts/cart";
+import { usePageChanger } from "../state/pageChanger";
+import ProductPage from "./ProductPage.vue";
 
 const data = ref([]);
 const cart = useCartStore();
+const pageChanger = usePageChanger()
 
 const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");
@@ -23,12 +26,12 @@ const fetchData = async () => {
     });
 
     const fullData = await response.json();
-data.value = (fullData.data || [])
-  .filter(item => item.amount > 0)
-  .map(item => ({
-    ...item,
-    id: item.idDrug,
-  }));
+    data.value = (fullData.data || [])
+    .filter(item => item.amount > 0)
+    .map(item => ({
+      ...item,
+      id: item.idDrug,
+    }));
   } catch (error) {
     console.log(error);
   }
@@ -40,13 +43,18 @@ onMounted(() => {
 const addProduct = (item) => {
   cart.addToCart(item);
 };
+
+const openProductPage = (itemId) => {
+  const selectedItem = data.value.find(item => item.id === itemId);
+  pageChanger.changePage(defineComponent(ProductPage), {product: selectedItem})
+}
 </script>
 
 <template>
   <main>
     <div class="container">
       <ul>
-        <li v-for="item in data" :key="item.id">
+        <li v-for="item in data" :key="item.id" :class="item.id" @click="openProductPage(item.id)">
           <img :src="item.image" alt="zdjęcie" />
           <div class="values">
             <div class="info">
