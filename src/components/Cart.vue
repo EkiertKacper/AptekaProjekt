@@ -3,17 +3,12 @@ import { ref, onMounted, defineComponent } from "vue";
 import { useCartStore } from "../scripts/cart";
 import { usePageChanger } from "../state/pageChanger";
 import ProductPage from "./ProductPage.vue";
-
-import Toast from "./Toast.vue"; 
+import Toast from "./Toast.vue";
 
 const cart = useCartStore();
-
-const data = ref("");
-const isDragging = ref(false);
-const startX = ref(0);
-const scrollLeft = ref(0);
+const data = ref([]);
 const suggested = ref([]);
-const toastRef = ref(null); 
+const toastRef = ref(null);
 
 const checkout = async () => {
   if (cart.items.length === 0) {
@@ -46,14 +41,9 @@ const checkout = async () => {
     toastRef.value.showToast("Błąd połączenia przy zamawianiu", "error");
   }
 };
-console.log(cart.items);
+
 const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");
-  const requestBody = {
-    page: 0,
-    limit: 10,
-  };
-
   try {
     const response = await fetch("http://localhost:3030/api/v1/listDrugs", {
       method: "POST",
@@ -61,46 +51,38 @@ const fetchData = async () => {
         "Content-Type": "application/json",
         Authorization: token,
       },
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify({ page: 0, limit: 10 }),
     });
-
     const fullData = await response.json();
     data.value = fullData.data;
-
     const notInCart = data.value.filter(
-      (product) => !cart.items.some((item) => item.idDrug === product.idDrug)
+      product => !cart.items.some(item => item.idDrug === product.idDrug)
     );
-
-    const shuffled = [...notInCart].sort(() => 0.5 - Math.random());
-    suggested.value = shuffled.slice(0, 8);
+    suggested.value = notInCart.sort(() => 0.5 - Math.random()).slice(0, 8);
   } catch (error) {
     console.log(error);
   }
 };
 
-onMounted(() => {
-  fetchData();
-});
+onMounted(fetchData);
+
 const validateQuantity = (item) => {
-  if (item.quantity < 1) {
-    cart.updateQuantity(item.idDrug, 1);
-  } else if (item.quantity > item.amount) {
-    cart.updateQuantity(item.idDrug, item.amount);
-  } else {
-    cart.updateQuantity(item.idDrug, item.quantity);
-  }
+  let q = item.quantity;
+  if (q < 1) q = 1;
+  if (q > item.amount) q = item.amount;
+  cart.updateQuantity(item.idDrug, q);
 };
 
 const removeItem = (idDrug) => {
   cart.removeFromCart(idDrug);
+  toastRef.value.showToast("Produkt został usunięty z koszyka", "success");
 };
 
-
-const pageChanger = usePageChanger()
+const pageChanger = usePageChanger();
 const openProductPage = (itemId) => {
   const selectedItem = data.value.find(item => item.idDrug === itemId);
-  pageChanger.changePage(defineComponent(ProductPage), {product: selectedItem})
-}
+  pageChanger.changePage(defineComponent(ProductPage), { product: selectedItem });
+};
 </script>
 
 <template>
@@ -133,29 +115,6 @@ const openProductPage = (itemId) => {
       </div>
       <button class="checkout-button" @click="checkout">Zamów produkty ></button>
     </div>
-
-    <!-- <div
-      class="horizontal-scroll"
-      @mousedown="handleMouseDown"
-      @mousemove="handleMouseMove"
-      @mouseup="handleMouseUp"
-      @mouseleave="handleMouseUp"
-    >
-      <h3>Może jeszcze to Ci się przyda</h3>
-      <div class="suggested-items">
-        <div
-          class="suggested-item"
-          v-for="item in suggested"
-          :key="item.idDrug"
-          @click="openProductPage(item.idDrug)"
-        >
-          <img :src="item.image" :alt="item.name">
-          <p class="item-name">{{ item.name }}</p>
-          <p class="item-price">{{ item.price.toFixed(2) }} zł</p>
-          <button class="add-button" @click.stop="cart.addToCart(item)">+</button>
-        </div>
-      </div>
-    </div> -->
     <Toast ref="toastRef" />
   </div>
 </template>

@@ -2,38 +2,32 @@
 import { ref, onMounted, computed } from "vue";
 const orders = ref([]);
 const page = ref(0);
-const total = ref(0);
 
 const fetchOrders = async () => {
-  const token = localStorage.getItem("sessionToken");
   try {
+    const token = localStorage.getItem("sessionToken");
     const response = await fetch("http://localhost:3030/api/v1/orderHistory", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: token,
       },
-      body: JSON.stringify({
-        page: page.value,
-        limit: 50,
-      }),
+      body: JSON.stringify({ page: page.value, limit: 50 }),
     });
     const result = await response.json();
     orders.value = result.data || [];
-    total.value = result.total || 0;
   } catch (error) {
     console.log(error);
   }
 };
 
+
 const groupedOrders = computed(() => {
-  // Grupowanie po orderId
   const groups = {};
   for (const order of orders.value) {
     if (!groups[order.orderId]) groups[order.orderId] = [];
     groups[order.orderId].push(order);
   }
-  // Zamień na tablicę [{orderId, items: [...]}, ...]
   return Object.entries(groups).map(([orderId, items]) => ({
     orderId,
     items
