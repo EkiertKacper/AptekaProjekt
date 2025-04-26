@@ -6,6 +6,7 @@ import BurgerMenu from "./MenuItems.vue";
 import Order from "./Orders.vue";
 import { useMenuPage } from "../state/menuPage";
 
+
 const data = ref("");
 const menuPage = useMenuPage()
 
