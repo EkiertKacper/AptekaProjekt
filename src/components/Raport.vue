@@ -49,7 +49,7 @@ onMounted(fetchReports);
 </script>
 
 <template>
-  <div>
+  <div class="main-container">
     <h2>Raport zamówień</h2>
     <div v-for="user in groupedReports" :key="user.user_email" class="user-block">
       <div class="user-header">
@@ -83,6 +83,17 @@ onMounted(fetchReports);
 </template>
 
 <style scoped lang="scss">
+.main-container {
+  margin: 32px 0;
+  padding-left: 48px;
+  padding-right: 48px;
+
+  h2{
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 24px;
+  }
 .user-block {
   background: #f4f4f4;
   border-radius: 14px;
@@ -139,6 +150,7 @@ onMounted(fetchReports);
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
 }
 @media (max-width: 900px) {
   .products-list {

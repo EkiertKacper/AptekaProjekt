@@ -88,7 +88,7 @@ $transition: all 0.2s ease-in-out;
   align-items: center;
   padding: 20px;
   background-color: #fff;
-  // Usunięto cień, bo może wyglądać źle na węższych ekranach
+
 }
 
 .product-details {
@@ -101,7 +101,7 @@ $transition: all 0.2s ease-in-out;
   border: 1px solid $border-color;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
-  max-width: 95%; // Zwiększono max-width na większych ekranach
+  max-width: 95%;
   width: 100%;
 
   @media (max-width: 768px) {

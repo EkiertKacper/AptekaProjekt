@@ -5,6 +5,7 @@ import Cart from './Cart.vue';
 import UserPanel from './UserPanel.vue';
 import SearchList from './SearchList.vue';
 import { useMenuPage } from '../state/menuPage';
+import BurgerMenu from './BurgerMenu.vue';
 
 
 const isSearchListActive = ref(false)
@@ -26,6 +27,7 @@ const handleSearch = () => {
 <template>
     <div class="search">
         <div class="top-bar">
+            <BurgerMenu/>
             <div class="search-wrapper">
                 <input type="text" placeholder="Search" class="search-input" @focus="isInputActive = true" @blur="isInputActive = false" @input="handleSearch" v-model="query"/>
                 <span class="search-icon">
