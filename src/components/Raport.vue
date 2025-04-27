@@ -42,8 +42,8 @@ const groupedOrders = computed(() => {
       orderId,
       items: group.items,
       user: group.user
-    }))
-    .sort((a, b) => b.orderId - a.orderId);
+    })).reverse();
+    
 });
 
 const nextPage = () => {
