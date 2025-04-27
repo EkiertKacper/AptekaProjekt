@@ -28,7 +28,7 @@ const fetchReports = async () => {
   }
 };
 
-// Grupowanie tylko po orderId, bez grupowania po użytkowniku
+
 const groupedOrders = computed(() => {
   const groups = {};
   for (const report of reports.value) {
@@ -36,7 +36,7 @@ const groupedOrders = computed(() => {
     if (!groups[orderId]) groups[orderId] = { items: [], user: report };
     groups[orderId].items.push(report);
   }
-  // Sortuj malejąco po orderId (najnowsze zamówienia na górze)
+
   return Object.entries(groups)
     .map(([orderId, group]) => ({
       orderId,
