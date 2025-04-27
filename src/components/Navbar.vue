@@ -6,6 +6,8 @@ import ProductList from './ProductList.vue'
 import UserPanel from "./UserPanel.vue";
 import Account from "./Account.vue";
 import { useMenuPage } from "../state/menuPage";
+import Admin from "./Admin.vue";
+import Raport from "./Raport.vue";
 
 const props = defineProps({
   isLargeScreen: {
@@ -55,6 +57,14 @@ const switcher = (e) => {
             menuPage.changePage(defineComponent(Account))
             pageChanger.changePage(defineComponent(UserPanel))    
             break;
+        case "Admin":
+          menuPage.changePage(defineComponent(Admin))
+          pageChanger.changePage(defineComponent(Admin))    
+          break;
+        case "Raport":
+          menuPage.changePage(defineComponent(Raport))
+          pageChanger.changePage(defineComponent(Raport))    
+          break;
     }
 }
 const emit = defineEmits(['logout'])
@@ -105,6 +115,14 @@ const logout = () => {
                   <p class="label">Konto</p>
                 </div>
               <div class="separator"></div>
+              <div class="menu-option" id="Admin" @click="switcher">
+                  <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#333"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
+                  <p class="label">Panel Produktów</p>
+                </div>
+                <div class="menu-option" id="Raport" @click="switcher">
+                  <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="#333"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
+                  <p class="label">Zamówienioa klientów</p>
+                </div>
               </div>
               <div class="logout">
               <div class="menu-option" @click="logout">

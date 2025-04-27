@@ -14,7 +14,7 @@ const newProduct = ref({
 const editProduct = ref(null);
 const token = localStorage.getItem("sessionToken");
 
-// Toast ref
+
 const toastRef = ref(null);
 
 const fetchProducts = async () => {
@@ -109,14 +109,14 @@ onMounted(fetchProducts);
 </script>
 
 <template>
-  <div>
+  <main>
     <Toast ref="toastRef" />
     <h2>Produkty</h2>
     <h3>Dodaj nowy produkt</h3>
     <form @submit.prevent="addProduct" class="add-form">
       <input v-model="newProduct.name" placeholder="Nazwa" required />
       <input v-model="newProduct.dose" placeholder="Dawka" required />
-      <input v-model="newProduct.price" placeholder="Cena" required type="number" step="0.01" />
+      <input v-model="newProduct.price" placeholder="Cena" required type="number"  />
       <input v-model="newProduct.type" placeholder="Typ" required />
       <input v-model="newProduct.companyName" placeholder="Firma" required />
       <input v-model="newProduct.amount" placeholder="Ilość" required type="number" />
@@ -156,17 +156,37 @@ onMounted(fetchProducts);
         </template>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <style scoped lang="scss">
 $green: #81b433;
 $light-gray: #f4f8ec;
 $border: #c7e2a3;
+ main{
+  margin: 32px 0;
+  padding-left: 48px;
+  padding-right: 48px;
+ 
+  h2{
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 24px;
+  }
 
+  
+    h3{
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 24px;
+  }
+  
 .products-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
   margin-bottom: 32px;
 }
@@ -260,4 +280,5 @@ button {
     background: darken($green, 10%);
   }
 }
+ }
 </style>
