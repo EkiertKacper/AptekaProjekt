@@ -1,32 +1,43 @@
 <script setup>
-import { defineComponent } from 'vue';
+import { ref } from 'vue';
 import { useMenuPage } from '../state/menuPage';
+import { usePageChanger } from '../state/pageChanger';
 import Cart from './Cart.vue';
 import Orders from './Orders.vue';
 import Account from './Account.vue';
 import Admin from './Admin.vue';
 import Raport from './Raport.vue';
+import UserPanel from './UserPanel.vue';
 
-const menuPage = useMenuPage()
-  const userPanelMenuOption = (e) => {
-    switch(e.target.id) {
-      case 'konto':
-        menuPage.changePage(defineComponent(Account)) 
-        break;
-      case 'zamowienia':
-        menuPage.changePage(defineComponent(Orders))  
-        break;
-      case 'koszyk':
-        menuPage.changePage(defineComponent(Cart))  
-    }
+const pageChanger = usePageChanger();
+const menuPage = useMenuPage();
+const prev = ref(null);
+
+const userPanelMenuOption = (e) => {
+  const item = e.currentTarget;
+
+  switch (item.id) {
+    case "account":
+      pageChanger.changePage(UserPanel);
+      menuPage.changePage(Account);
+      break;
+    case "orders":
+    pageChanger.changePage(UserPanel);
+      menuPage.changePage(Orders);
+      break;
+    case "settings":
+      pageChanger.changePage(UserPanel);
+      menuPage.changePage(Cart);
+      break;
   }
+};
 </script>
 
 <template>
   <ul>
-    <li @click="userPanelMenuOption" id="konto">Konto</li>
-    <li @click="userPanelMenuOption" id="zamowienia">Zamówienia</li>
-    <li @click="userPanelMenuOption" id="koszyk">Koszyk</li>
+    <li @click="userPanelMenuOption" id="account">Konto</li>
+    <li @click="userPanelMenuOption" id="orders">Zamówienia</li>
+    <li @click="userPanelMenuOption" id="settings">Koszyk</li>
   </ul>
 </template>
 
