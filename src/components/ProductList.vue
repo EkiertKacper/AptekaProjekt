@@ -13,7 +13,7 @@ const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");
   const requestBody = {
     page: 0,
-    limit: 100,
+    limit: 16,
   };
 
   try {

@@ -49,6 +49,8 @@ import { onMounted, ref } from 'vue';
         img{
             width: 200px;
             margin: 20px;
+            border-radius: 1000%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); // Cień pod awatarem
         }
         p{
             font-size: 24px;
