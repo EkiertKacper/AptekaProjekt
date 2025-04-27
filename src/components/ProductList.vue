@@ -4,16 +4,20 @@ import { useCartStore } from "../scripts/cart";
 import { usePageChanger } from "../state/pageChanger";
 import ProductPage from "./ProductPage.vue";
 import Toast from "./Toast.vue";
-
+import Pagination from "./Pagination.vue";
 const data = ref([]);
 const cart = useCartStore();
-const pageChanger = usePageChanger()
+const pageChanger = usePageChanger();
+
+const page = ref(0);
+const totalPages = ref(1);
+const limit = 16;
 
 const fetchData = async () => {
   const token = localStorage.getItem("sessionToken");
   const requestBody = {
-    page: 0,
-    limit: 16,
+    page: page.value,
+    limit: limit,
   };
 
   try {
@@ -28,11 +32,15 @@ const fetchData = async () => {
 
     const fullData = await response.json();
     data.value = (fullData.data || [])
-    .filter(item => item.amount > 0)
-    .map(item => ({
-      ...item,
-      id: item.idDrug,
-    }));
+      .filter((item) => item.amount > 0)
+      .map((item) => ({
+        ...item,
+        id: item.idDrug,
+      }));
+
+    if (fullData.metadata && fullData.metadata.pageCount !== undefined) {
+      totalPages.value = fullData.metadata.pageCount;
+    }
   } catch (error) {
     console.log(error);
   }
@@ -43,32 +51,54 @@ onMounted(() => {
 });
 
 const toast = ref(null);
-function showToast (message, status) {
+function showToast(message, status) {
   toast.value.showToast(message, status);
-};
+}
 const addProduct = (item) => {
-  const mes = cart.addToCart(item);  
-  switch(mes){
-    case 'positive': 
-      showToast("Dodano do koszyka!", 'positive')
+  const mes = cart.addToCart(item);
+  switch (mes) {
+    case "positive":
+      showToast("Dodano do koszyka!", "positive");
       break;
-    case 'error':
-      showToast("Nie mamy więcej tego produktu!", 'negative')  
+    case "error":
+      showToast("Nie mamy więcej tego produktu!", "negative");
       break;
   }
 };
 
 const openProductPage = (itemId) => {
-  const selectedItem = data.value.find(item => item.id === itemId);
-  pageChanger.changePage(defineComponent(ProductPage), {product: selectedItem})
-}
+  const selectedItem = data.value.find((item) => item.id === itemId);
+  pageChanger.changePage(defineComponent(ProductPage), {
+    product: selectedItem,
+  });
+};
+
+const nextPage = () => {
+  if (page.value < totalPages.value - 1) {
+    page.value++;
+    fetchData();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+const prevPage = () => {
+  if (page.value > 0) {
+    page.value--;
+    fetchData();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
 </script>
 
 <template>
   <main>
     <div class="container">
       <ul>
-        <li v-for="item in data" :key="item.id" :class="item.id" @click="openProductPage(item.id)">
+        <li
+          v-for="item in data"
+          :key="item.id"
+          :class="item.id"
+          @click="openProductPage(item.id)"
+        >
           <img :src="item.image" alt="zdjęcie" />
           <div class="values">
             <div class="info">
@@ -82,7 +112,13 @@ const openProductPage = (itemId) => {
         </li>
       </ul>
     </div>
-    <Toast ref="toast"/>
+    <Pagination
+      :currentPage="page"
+      :totalPages="totalPages"
+      @next="nextPage"
+      @prev="prevPage"
+    />
+    <Toast ref="toast" />
   </main>
 </template>
 
@@ -233,4 +269,5 @@ main {
     }
   }
 }
+
 </style>

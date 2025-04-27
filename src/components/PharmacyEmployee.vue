@@ -1,55 +1,59 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const name = ref('');
-const surname = ref('');
-const email = ref('');
-const password = ref('');
-const error = ref('');
-const success = ref('');
+const name = ref("");
+const surname = ref("");
+const email = ref("");
+const password = ref("");
+const error = ref("");
+const success = ref("");
 const loading = ref(false);
 
 function clearMessages() {
-  error.value = '';
-  success.value = '';
+  error.value = "";
+  success.value = "";
 }
 
 async function register() {
   clearMessages();
 
-  if (name.value.length < 1 || surname.value.length < 1 || email.value.length < 3 || password.value.length < 8) {
-    error.value = 'Uzupełnij poprawnie wszystkie pola.';
+  if (
+    name.value.length < 1 ||
+    surname.value.length < 1 ||
+    email.value.length < 3 ||
+    password.value.length < 8
+  ) {
+    error.value = "Uzupełnij poprawnie wszystkie pola.";
     return;
   }
 
   loading.value = true;
   try {
-    const res = await fetch('http://localhost:3030/api/v1/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("http://localhost:3030/api/v1/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: name.value,
         surname: surname.value,
         email: email.value,
         password: password.value,
-        permission: 1
-      })
+        permission: 1,
+      }),
     });
 
     const data = await res.json();
 
     if (res.ok) {
-      success.value = 'Rejestracja pracownika udana!';
-      name.value = '';
-      surname.value = '';
-      email.value = '';
-      password.value = '';
+      success.value = "Rejestracja pracownika udana!";
+      name.value = "";
+      surname.value = "";
+      email.value = "";
+      password.value = "";
     } else {
-      error.value = data.data || 'Błąd rejestracji.';
+      error.value = data.data || "Błąd rejestracji.";
     }
-
   } catch (err) {
-    error.value = 'Błąd połączenia.';
+    error.value = "Błąd połączenia.";
     console.error(err);
   }
   loading.value = false;
@@ -64,14 +68,16 @@ async function register() {
       <div class="error" v-if="error">{{ error }}</div>
       <div class="success" v-if="success">{{ success }}</div>
 
-      <input v-model="name" type="text" placeholder="Imię" />
-      <input v-model="surname" type="text" placeholder="Nazwisko" />
-      <input v-model="email" type="email" placeholder="Email" />
-      <input v-model="password" type="password" placeholder="Hasło" />
+      <form @submit.prevent="register">
+        <input v-model="name" type="text" placeholder="Imię" />
+        <input v-model="surname" type="text" placeholder="Nazwisko" />
+        <input v-model="email" type="email" placeholder="Email" />
+        <input v-model="password" type="password" placeholder="Hasło" autocomplete="new-password"/>
 
-      <button @click="register" :disabled="loading">
-        Zarejestruj pracownika
-      </button>
+        <button type="submit" :disabled="loading">
+          Zarejestruj pracownika
+        </button>
+      </form>
     </div>
   </main>
 </template>
@@ -82,12 +88,12 @@ main {
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  background-color: #f8f8f8; 
-  padding: 60px 20px 20px 20px; 
+  background-color: #f8f8f8;
+  padding: 60px 20px 20px 20px;
 }
 
 .auth-box {
-  background-color: #fff; 
+  background-color: #fff;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -97,7 +103,7 @@ main {
 }
 
 h2 {
-  color: #386641; 
+  color: #386641;
   margin-bottom: 20px;
 }
 
@@ -110,7 +116,7 @@ h2 {
 }
 
 .success {
-  background-color: #d7fada; 
+  background-color: #d7fada;
   color: #81b433;
   padding: 10px;
   border-radius: 4px;
@@ -131,12 +137,12 @@ input[type="password"] {
 
 input:focus {
   outline: none;
-  border-color: #386641; 
-  box-shadow: 0 0 5px #3866417e
+  border-color: #386641;
+  box-shadow: 0 0 5px #3866417e;
 }
 
 button {
-  background-color: #81b433; 
+  background-color: #81b433;
   color: white;
   padding: 12px 20px;
   border: none;

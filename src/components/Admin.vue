@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import Toast from "./Toast.vue";
+import Pagination from "./Pagination.vue";
 
 const products = ref([]);
 const newProduct = ref({
@@ -14,8 +15,11 @@ const newProduct = ref({
 const editProduct = ref(null);
 const token = localStorage.getItem("sessionToken");
 
-
 const toastRef = ref(null);
+
+const page = ref(0);
+const totalPages = ref(1);
+const limit = 18;
 
 const fetchProducts = async () => {
   const response = await fetch("http://localhost:3030/api/v1/listDrugs", {
@@ -24,10 +28,13 @@ const fetchProducts = async () => {
       "Content-Type": "application/json",
       Authorization: token,
     },
-    body: JSON.stringify({ page: 0, limit: 100 }),
+    body: JSON.stringify({ page: page.value, limit }),
   });
   const result = await response.json();
   products.value = result.data || [];
+  if (result.metadata && result.metadata.pageCount !== undefined) {
+    totalPages.value = result.metadata.pageCount;
+  }
 };
 
 const addProduct = async () => {
@@ -105,6 +112,21 @@ const removeProduct = async (idDrug) => {
   }
 };
 
+const nextPage = () => {
+  if (page.value < totalPages.value - 1) {
+    page.value++;
+    fetchProducts();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+const prevPage = () => {
+  if (page.value > 0) {
+    page.value--;
+    fetchProducts();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+
 onMounted(fetchProducts);
 </script>
 
@@ -156,9 +178,14 @@ onMounted(fetchProducts);
         </template>
       </div>
     </div>
+    <Pagination
+      :currentPage="page"
+      :totalPages="totalPages"
+      @next="nextPage"
+      @prev="prevPage"
+    />
   </main>
 </template>
-
 <style scoped lang="scss">
 $green: #81b433;
 $light-gray: #f4f8ec;

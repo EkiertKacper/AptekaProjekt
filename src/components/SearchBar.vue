@@ -27,7 +27,7 @@ const handleSearch = () => {
 <template>
     <div class="search">
         <div class="top-bar">
-            <BurgerMenu/>
+            <BurgerMenu />
             <div class="search-wrapper">
                 <input type="text" placeholder="Search" class="search-input" @focus="isInputActive = true" @blur="isInputActive = false" @input="handleSearch" v-model="query"/>
                 <span class="search-icon">

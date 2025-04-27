@@ -91,12 +91,13 @@ async function register() {
 
      <div class="error" v-if="error">{{ error }}</div>
      <div class="success" v-if="success">{{ success }}</div>
-
+  
+     
      <input v-if="!isLogin" v-model="name" type="text" placeholder="Imię" />
      <input v-if="!isLogin" v-model="surname" type="text" placeholder="Nazwisko" />
 
      <input v-model="email" type="email" placeholder="Email" />
-     <input v-model="password" type="password" placeholder="Hasło" />
+     <input v-model="password" type="password" placeholder="Hasło" autocomplete="new-password"/>
 
      <button @click="isLogin ? login() : register()">
        {{ isLogin ? 'Zaloguj' : 'Zarejestruj' }}

@@ -1,7 +1,11 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
+import Pagination from "./Pagination.vue";
+
 const orders = ref([]);
 const page = ref(0);
+const totalPages = ref(1);
+const limit = 4;
 
 const fetchOrders = async () => {
   try {
@@ -12,15 +16,17 @@ const fetchOrders = async () => {
         "Content-Type": "application/json",
         Authorization: token,
       },
-      body: JSON.stringify({ page: page.value, limit: 50 }),
+      body: JSON.stringify({ page: page.value, limit }),
     });
     const result = await response.json();
     orders.value = result.data || [];
+    if (result.metadata && result.metadata.pageCount !== undefined) {
+      totalPages.value = result.metadata.pageCount;
+    }
   } catch (error) {
     console.log(error);
   }
 };
-
 
 const groupedOrders = computed(() => {
   const groups = {};
@@ -31,13 +37,26 @@ const groupedOrders = computed(() => {
   return Object.entries(groups).map(([orderId, items]) => ({
     orderId,
     items
-  })).reverse()
-
+  })).reverse();
 });
+
+const nextPage = () => {
+  if (page.value < totalPages.value - 1) {
+    page.value++;
+    fetchOrders();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+const prevPage = () => {
+  if (page.value > 0) {
+    page.value--;
+    fetchOrders();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
 
 onMounted(() => {
   fetchOrders();
-
 });
 </script>
 
@@ -45,28 +64,34 @@ onMounted(() => {
   <div>
     <h2>Historia zamówień</h2>
     <div v-for="group in groupedOrders" :key="group.orderId" class="order-block">
-  <div class="order-header">
-    <span class="order-title">Zamówienie #{{ group.orderId }}</span>
-  </div>
-  <div class="order-total">
-    <b>Łączna cena zamówienia:</b>
-    {{
-      group.items.reduce(
-        (sum, order) => sum + order.price * order.purchase_amount,
-        0
-      ).toFixed(2)
-    }} zł
-  </div>
-  <div class="products-list">
-    <div v-for="order in group.items" :key="order.id" class="product-card">
-      <div><b>Nazwa leku:</b> {{ order.drug_name }}</div>
-      <div><b>Dawka:</b> {{ order.dose }}mg</div>
-      <div><b>Ilość:</b> {{ order.purchase_amount }}</div>
-      <div><b>Cena za sztukę:</b> {{ order.price.toFixed(2) }} zł</div>
-      <div><b>Typ:</b> {{ order.type }}</div>
+      <div class="order-header">
+        <span class="order-title">Zamówienie #{{ group.orderId }}</span>
+      </div>
+      <div class="order-total">
+        <b>Łączna cena zamówienia:</b>
+        {{
+          group.items.reduce(
+            (sum, order) => sum + order.price * order.purchase_amount,
+            0
+          ).toFixed(2)
+        }} zł
+      </div>
+      <div class="products-list">
+        <div v-for="order in group.items" :key="order.id" class="product-card">
+          <div><b>Nazwa leku:</b> {{ order.drug_name }}</div>
+          <div><b>Dawka:</b> {{ order.dose }}mg</div>
+          <div><b>Ilość:</b> {{ order.purchase_amount }}</div>
+          <div><b>Cena za sztukę:</b> {{ order.price.toFixed(2) }} zł</div>
+          <div><b>Typ:</b> {{ order.type }}</div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+    <Pagination
+      :currentPage="page"
+      :totalPages="totalPages"
+      @next="nextPage"
+      @prev="prevPage"
+    />
   </div>
 </template>
 
