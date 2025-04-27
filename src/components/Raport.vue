@@ -45,7 +45,7 @@ const groupedReports = computed(() => {
   }));
 });
 
-onMounted(fetchReports);
+onMounted(()=>{fetchReports()});
 </script>
 
 <template>
