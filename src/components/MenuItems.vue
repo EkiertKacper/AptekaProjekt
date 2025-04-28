@@ -5,8 +5,6 @@ import { usePageChanger } from '../state/pageChanger';
 import Cart from './Cart.vue';
 import Orders from './Orders.vue';
 import Account from './Account.vue';
-import Admin from './Admin.vue';
-import Raport from './Raport.vue';
 import UserPanel from './UserPanel.vue';
 
 const pageChanger = usePageChanger();
