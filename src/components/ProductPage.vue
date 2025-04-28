@@ -44,7 +44,7 @@ import { useCartStore } from '../scripts/cart';
     <main>
         <div class="product-page">
           <div class="product-details">
-            <img :src="currentProduct.image" :alt="currentProduct.name" class="product-image">
+            <img src="../assets/paracetamol.jpg" :alt="currentProduct.name" class="product-image">
             <div class="product-info">
               <h1>{{ currentProduct.name }}</h1>
               <p class="company">Producent: {{ currentProduct.companyName }}</p>

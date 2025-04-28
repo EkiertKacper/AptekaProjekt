@@ -168,9 +168,9 @@ fetchData()
 
             <div v-for="item in data" class="card product" @click="openProductPage(item.id)">
               <div class="card image-container card image-container product">
-                <img :src="item.image" :alt="item.name" class="card-image" />
+                <img src="../assets/paracetamol.jpg" :alt="item.name" class="card-image" />
               </div>
-              <h4 class="card-title card-title--product">{{ item.name }}</h4>
+              <h4 class="card-title card-title--product">{{ item.name }} {{item.dose}}mg</h4>
               <p class="card-price">{{ item.price }} zł</p>
               <button @click.stop="addProduct(item)">Do Koszyka</button>
             </div>
@@ -269,7 +269,6 @@ header {
  }
 
  h1 {
-  font-family: 'Poppins', sans-serif;
   color: #f0f0f0;
   font-size: 3rem;
   margin-bottom: 1rem;
@@ -311,7 +310,6 @@ section {
 }
 
 h2 {
- font-family: 'Poppins', sans-serif;
  color: $color-primary;
  font-size: 2.5rem;
  font-weight: 700;
@@ -333,7 +331,6 @@ button {
  min-width: max-content;
  border: none;
  border-radius: 50px;
- font-family: 'Poppins', sans-serif;
  cursor: pointer;
  transition: all 0.2s;
  text-decoration: none;
@@ -347,7 +344,6 @@ button {
  }
 }
 
-/* --- Cards --- */
 .card {
  background-color: #fff;
  border-radius: 12px;
@@ -375,7 +371,6 @@ button {
  }
 
  &-title {
-  font-family: 'Poppins', sans-serif;
   font-size: 1.3rem;
   font-weight: 600;
   color: $color-dark;
@@ -478,7 +473,7 @@ button {
  gap: 1.5rem;
  padding-bottom: 1rem;
  -ms-overflow-style: none;
- scrollbar-width: none;
+
 }
 
 

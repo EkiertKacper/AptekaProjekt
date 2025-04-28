@@ -37,7 +37,7 @@ defineExpose({ showToast });
   z-index: 10000;
   opacity: 0.95;
   border: 2px solid #386641;
-  background: rgba(129, 180, 51, 0.85); /* domyślnie zielony */
+  background: rgba(129, 180, 51, 0.85);
 }
 .toast.error {
   background: rgba(200, 50, 50, 0.92);

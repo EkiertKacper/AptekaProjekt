@@ -320,7 +320,6 @@ $mint: #6b9922;
       height: 100vh;
       background-color: #f0f0f0;
       color: black;
-      font-family: "Poppins", sans-serif;
       overflow: hidden;
 
       .logo-section {
@@ -398,7 +397,6 @@ $mint: #6b9922;
       height: 100vh;
       background-color: #f0f0f0;
       color: black;
-      font-family: "Poppins", sans-serif;
       overflow: hidden;
 
       .logo-section {

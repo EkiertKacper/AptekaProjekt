@@ -99,10 +99,10 @@ const prevPage = () => {
           :class="item.id"
           @click="openProductPage(item.id)"
         >
-          <img :src="item.image" alt="zdjęcie" />
+          <img src="../assets/paracetamol.jpg" alt="zdjęcie" />
           <div class="values">
             <div class="info">
-              <p>{{ item.name }}</p>
+              <p>{{ item.name }} {{item.dose}}mg </p>
               <p class="cena">{{ item.price.toFixed(2) }}zł</p>
             </div>
             <form @submit.prevent="addProduct(item)">
@@ -123,14 +123,12 @@ const prevPage = () => {
 </template>
 
 <style scoped lang="scss">
-// $green: #57FF90;
 $green: #81b433;
 $light-gray: #f8f8f8;
 $shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 $black: #000;
 $gray: #666;
 
-// --- MAIN CONTENT + HEADER ---
 main {
   display: flex;
   flex-direction: column;
@@ -180,6 +178,7 @@ main {
     li {
       flex-grow: 1;
       width: 280px;
+      max-height: 245px;
       background-color: white;
       border-radius: 12px;
       padding: 12px;
@@ -206,7 +205,7 @@ main {
         .info {
           display: flex;
           flex-direction: column;
-          text-align: center;
+          text-align: start;
 
           p:first-of-type {
             font-size: 16px;

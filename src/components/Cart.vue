@@ -90,8 +90,10 @@ const openProductPage = (itemId) => {
     <div class="cart-header">Koszyk</div>
     <div class="cart-item" v-for="item in cart.items" :key="item.idDrug" @click="openProductPage(item.idDrug)">
       <div class="product-info">
-        <img :src="item.image" alt="Product" />
-        <div class="product-name">{{ item.name }}</div>
+        <img src="../assets/paracetamol.jpg" alt="Product" />
+        <div class="product-name">
+          <p>{{ item.name }}</p></div>
+          <p>{{item.dose}}mg</p>
       </div>
       <div class="product-actions">
         <span>{{ item.price.toFixed(2) }} zł</span>
@@ -143,12 +145,12 @@ $gray: #666;
 
   .product-info {
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: 10px;
 
     img {
-      width: 50px;
-      height: 50px;
+      width: 100px;
+      height: 100px;
       border-radius: 8px;
     }
 

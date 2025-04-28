@@ -97,7 +97,7 @@ async function register() {
      <input v-if="!isLogin" v-model="surname" type="text" placeholder="Nazwisko" />
 
      <input v-model="email" type="email" placeholder="Email" />
-     <input v-model="password" type="password" placeholder="Hasło" autocomplete="new-password"/>
+     <input v-model="password" type="password" placeholder="Hasło"/>
 
      <button @click="isLogin ? login() : register()">
        {{ isLogin ? 'Zaloguj' : 'Zarejestruj' }}

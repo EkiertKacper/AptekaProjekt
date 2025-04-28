@@ -80,8 +80,9 @@ import ProductPage from './ProductPage.vue';
         <ul v-if="results != undefined && !loading">
             <li v-for="res in results" @click="openProductPage(res.idDrug)">
                 <div>
-                    <img :src="res.image" alt="Lek">
+                    <img src="../assets/paracetamol.jpg" alt="Lek">
                     <h2>{{ res.name }}</h2>
+                    <p>{{ res.dose}}mg</p>
                     <p>{{ res.price.toFixed(2) }}zł</p>
                 </div>
             </li>
@@ -102,47 +103,47 @@ import ProductPage from './ProductPage.vue';
 
 <style lang="scss" scoped>
     main {
-        background-color: rgba(240, 240, 240, 0.5); // Półprzezroczyste tło
-        position: relative; // Ustawienie pozycji względem innych elementów
-        z-index: 10; // Wyższy priorytet warstwy, aby przysłaniać inne elementy
+        background-color: rgba(240, 240, 240, 0.5);
+        position: relative;
+        z-index: 10;
 
         ul {
             display: flex;
-            justify-content: flex-start; // Elementy wyrównane do początku
+            justify-content: flex-start;
             align-items: center;
             list-style: none;
             height: auto;
-            gap: 20px; // Odstępy między elementami
-            flex-wrap: nowrap; // Elementy w jednym rzędzie
-            overflow-x: auto; // Przewijanie w poziomie
+            gap: 20px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
             padding: 10px;
-            scrollbar-width: thin; // Cieńszy pasek przewijania (dla przeglądarek wspierających)
-            background-color: rgba(255, 255, 255, 0.85); // Półprzezroczyste tło dla wyników
+            scrollbar-width: thin;
+            background-color: rgba(255, 255, 255, 0.85);
             border: 0.5px solid #999;
-            border-radius: 12px; // Zaokrąglenie rogów
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); // Lekki cień
-            position: absolute; // Ustawienie listy wyników nad innymi elementami
-            top: 0; // Pozycja względem rodzica (main)
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 0;
             left: 0;
             right: 0;
-            z-index: 20; // Wyższy priorytet warstwy niż main
+            z-index: 20;
 
             &::-webkit-scrollbar {
-                height: 8px; // Wysokość paska przewijania
+                height: 8px;
             }
 
             &::-webkit-scrollbar-thumb {
-                background-color: #ccc; // Kolor paska przewijania
+                background-color: #ccc;
                 border-radius: 4px;
             }
 
             li {
-                flex: 0 0 auto; // Zapobiega rozciąganiu elementów
+                flex: 0 0 auto;
                 height: 170px;
                 width: 150px;
 
                 div {
-                    background-color: rgba(255, 255, 255, 0.9); // Półprzezroczyste tło dla elementów
+                    background-color: rgba(255, 255, 255, 0.9);
                     width: 100%;
                     height: 100%;
                     border: 0.5px solid #999;
@@ -157,7 +158,7 @@ import ProductPage from './ProductPage.vue';
 
                     &:hover {
                         transform: translateY(-4px);
-                        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); // Zwiększenie cienia podczas hover
+                        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
                     }
 
                     img {
