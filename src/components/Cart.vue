@@ -12,7 +12,10 @@ const toastRef = ref(null);
 
 const checkout = async () => {
   if (cart.items.length === 0) {
-    toastRef.value.showToast("Koszyk jest pusty. Dodaj produkty przed złożeniem zamówienia.", "error");
+    toastRef.value.showToast(
+      "Koszyk jest pusty. Dodaj produkty przed złożeniem zamówienia.",
+      "error"
+    );
     return;
   }
   const token = localStorage.getItem("sessionToken");
@@ -24,10 +27,10 @@ const checkout = async () => {
         Authorization: token,
       },
       body: JSON.stringify({
-        items: cart.items.map(item => ({
+        items: cart.items.map((item) => ({
           id: item.idDrug,
-          amount: item.quantity
-        }))
+          amount: item.quantity,
+        })),
       }),
     });
     const result = await response.json();
@@ -56,7 +59,7 @@ const fetchData = async () => {
     const fullData = await response.json();
     data.value = fullData.data;
     const notInCart = data.value.filter(
-      product => !cart.items.some(item => item.idDrug === product.idDrug)
+      (product) => !cart.items.some((item) => item.idDrug === product.idDrug)
     );
     suggested.value = notInCart.sort(() => 0.5 - Math.random()).slice(0, 8);
   } catch (error) {
@@ -80,25 +83,33 @@ const removeItem = (idDrug) => {
 
 const pageChanger = usePageChanger();
 const openProductPage = (itemId) => {
-  const selectedItem = data.value.find(item => item.idDrug === itemId);
-  pageChanger.changePage(defineComponent(ProductPage), { product: selectedItem });
+  const selectedItem = data.value.find((item) => item.idDrug === itemId);
+  pageChanger.changePage(defineComponent(ProductPage), {
+    product: selectedItem,
+  });
 };
 </script>
 
 <template>
   <div>
     <div class="cart-header">Koszyk</div>
-    <div class="cart-item" v-for="item in cart.items" :key="item.idDrug" @click="openProductPage(item.idDrug)">
+    <div
+      class="cart-item"
+      v-for="item in cart.items"
+      :key="item.idDrug"
+      @click="openProductPage(item.idDrug)"
+    >
       <div class="product-info">
         <img src="../assets/paracetamol.jpg" alt="Product" />
         <div class="product-name">
-          <p>{{ item.name }}</p></div>
-          <p>{{item.dose}}mg</p>
+          <p>{{ item.name }}</p>
+        </div>
+        <p>{{ item.dose }}mg</p>
       </div>
       <div class="product-actions">
         <span>{{ item.price.toFixed(2) }} zł</span>
         <input
-        @click.stop
+          @click.stop
           type="number"
           v-model.number="item.quantity"
           min="1"
@@ -113,9 +124,15 @@ const openProductPage = (itemId) => {
     <div class="cart-footer">
       <div class="total">
         Do zapłaty:
-        {{ cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2) }}zł
+        {{
+          cart.items
+            .reduce((sum, i) => sum + i.price * i.quantity, 0)
+            .toFixed(2)
+        }}zł
       </div>
-      <button class="checkout-button" @click="checkout">Zamów produkty ></button>
+      <button class="checkout-button" @click="checkout">
+        Zamów produkty >
+      </button>
     </div>
     <Toast ref="toastRef" />
   </div>
@@ -229,85 +246,6 @@ $gray: #666;
   }
 }
 
-.horizontal-scroll {
-  margin: 0 auto;
-  margin-top: 20px;
-  background-color: $light-gray;
-  padding: 20px;
-  border-radius: 8px;
-  overflow-x: auto;
-  max-width: 1000px;
-  box-sizing: border-box;
-  cursor: grab;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  &:active {
-    cursor: grabbing;
-  }
-
-  h3 {
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: $black;
-  }
-
-  .suggested-items {
-    display: flex;
-    gap: 20px;
-    
-
-    .suggested-item {
-      flex: 0 0 auto;
-      width: 180px;
-      text-align: center;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: $shadow;
-      padding: 15px;
-
-      img {
-        width: 100%;
-        height: 120px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-      }
-
-      .item-name {
-        font-size: 14px;
-        font-weight: bold;
-        color: $black;
-        margin-bottom: 5px;
-      }
-
-      .item-price {
-        font-size: 12px;
-        color: $gray;
-        margin-bottom: 10px;
-      }
-
-      .add-button {
-        background-color: $green;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: darken($green, 10%);
-        }
-      }
-    }
-  }
-}
-
 @media screen and (max-width: 768px) {
   .cart-item {
     flex-direction: column;
@@ -315,42 +253,6 @@ $gray: #666;
 
     .product-actions {
       margin-top: 10px;
-    }
-  }
-
-  .horizontal-scroll {
-    padding: 10px;
-
-    h3 {
-      font-size: 16px;
-    }
-
-    .suggested-items {
-      gap: 40px;
-
-      .suggested-item {
-        width: 140px;
-        padding: 10px;
-        
-
-        .image-placeholder {
-          height: 120px;
-        }
-
-        .item-name {
-          font-size: 1.1rem;
-        }
-
-        .item-price {
-          font-size: 1.2rem;
-        }
-
-        .add-button {
-          width: 40px;
-          height: 40px;
-          font-size: 14px;
-        }
-      }
     }
   }
 }
