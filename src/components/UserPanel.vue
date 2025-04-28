@@ -5,16 +5,6 @@ import { useMenuPage } from "../state/menuPage";
 
 const menuPage = useMenuPage();
 
-const fetchData = async () => {
-  const token = localStorage.getItem("sessionToken");
-  const requestBody = {
-    page: 0,
-    limit: 10,
-  };
-};
-onMounted(() => {
-  fetchData();
-});
 </script>
 
 <template>

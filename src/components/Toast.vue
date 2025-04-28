@@ -1,11 +1,3 @@
-<template>
-  <transition name="fade">
-    <div v-if="visible" :class="['toast', toastType]">
-      {{ message }}
-    </div>
-  </transition>
-</template>
-
 <script setup>
 import { ref } from "vue";
 const visible = ref(false);
@@ -23,6 +15,18 @@ function showToast(msg = "Powiadomienie", type = "success") {
 
 defineExpose({ showToast });
 </script>
+
+
+
+<template>
+  <transition name="fade">
+    <div v-if="visible" :class="['toast', toastType]">
+      {{ message }}
+    </div>
+  </transition>
+</template>
+
+
 
 <style scoped>
 .toast {

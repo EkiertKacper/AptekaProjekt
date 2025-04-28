@@ -78,7 +78,7 @@ const updateProduct = async () => {
     drugId: editProduct.value.idDrug,
     name: editProduct.value.name,
     dose: Number(editProduct.value.dose),
-    price: parseFloat(editProduct.value.price),
+    price: Number.parseFloat(editProduct.value.price),
     type: editProduct.value.type,
     companyName: editProduct.value.companyName,
     amount: Number(editProduct.value.amount),
