@@ -9,6 +9,7 @@ import { useMenuPage } from "../state/menuPage";
 import Admin from "./Admin.vue";
 import Raport from "./Raport.vue";
 import PharmacyEmployee from "./PharmacyEmployee.vue";
+
 const props = defineProps({
   isLargeScreen: {
     type: Boolean,
@@ -103,7 +104,9 @@ const logout = () => {
 <template>
   <nav ref="nav" class="mobileNav" v-if="!props.isLargeScreen">
     <div id="glowna" class="box" @click="switcher">
-      <p class="navItem"><span class="material-symbols-outlined">home</span></p>
+      <p class="navItem">
+        <span class="material-symbols-outlined">home</span>
+      </p>
     </div>
     <div id="produkty" class="box" @click="switcher">
       <p class="navItem">
@@ -116,127 +119,80 @@ const logout = () => {
       </p>
     </div>
     <div id="Admin" class="box" @click="switcher" v-if="userPermission === 1 || userPermission === 2">
-  <p class="navItem"><span class="material-symbols-outlined">admin_panel_settings</span></p>
-</div>
-<div id="Raport" class="box" @click="switcher" v-if="userPermission === 1 || userPermission === 2">
-  <p class="navItem"><span class="material-symbols-outlined">assignment</span></p>
-</div>
-<div id="PharmacyEmployee" class="box" @click="switcher" v-if="userPermission === 2">
-  <p class="navItem">
-    <span class="material-symbols-outlined">person_add</span>
-  </p>
-</div>
+      <p class="navItem"><span class="material-symbols-outlined">admin_panel_settings</span></p>
+    </div>
+    <div id="Raport" class="box" @click="switcher" v-if="userPermission === 1 || userPermission === 2">
+      <p class="navItem"><span class="material-symbols-outlined">assignment</span></p>
+    </div>
+    <div id="PharmacyEmployee" class="box" @click="switcher" v-if="userPermission === 2">
+      <p class="navItem">
+        <span class="material-symbols-outlined">person_add</span>
+      </p>
+    </div>
 
   </nav>
 
   <nav class="desktopNav" v-if="props.isLargeScreen">
     <div class="navBar-pc">
       <div class="logo-section" id="glowna" @click="switcher">
-        <img
-          src="../assets/logo-transparent.png"
-          class="logo-img"
-          alt="logo przedstawiające liść"
-        />
+        <img src="../assets/logo-transparent.png" class="logo-img" alt="logo przedstawiające liść" />
         <h1 class="logo-text">Zdrowix</h1>
       </div>
       <div class="main-section">
         <div class="separator"></div>
 
         <div class="menu-option" id="glowna" @click="switcher">
-          <svg
-            class="icon"
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 -960 960 960"
-            width="24"
-            fill="#000"
-          >
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"
+            fill="#000">
             <path
-              d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Z"
-            />
+              d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Z" />
           </svg>
           <p class="label">Strona główna</p>
         </div>
 
         <div class="menu-option" id="produkty" @click="switcher">
-          <svg
-            class="icon"
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 -960 960 960"
-            width="24px"
-            fill="#000000"
-          >
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+            fill="#000">
             <path
-              d="M240-80q-33 0-56.5-23.5T160-160v-480q0-33 23.5-56.5T240-720h80q0-66 47-113t113-47q66 0 113 47t47 113h80q33 0 56.5 23.5T800-640v480q0 33-23.5 56.5T720-80H240Zm0-80h480v-480h-80v80q0 17-11.5 28.5T600-520q-17 0-28.5-11.5T560-560v-80H400v80q0 17-11.5 28.5T360-520q-17 0-28.5-11.5T320-560v-80h-80v480Zm160-560h160q0-33-23.5-56.5T480-800q-33 0-56.5 23.5T400-720ZM240-160v-480 480Z"
-            />
+              d="M240-80q-33 0-56.5-23.5T160-160v-480q0-33 23.5-56.5T240-720h80q0-66 47-113t113-47q66 0 113 47t47 113h80q33 0 56.5 23.5T800-640v480q0 33-23.5 56.5T720-80H240Zm0-80h480v-480h-80v80q0 17-11.5 28.5T600-520q-17 0-28.5-11.5T560-560v-80H400v80q0 17-11.5 28.5T360-520q-17 0-28.5-11.5T320-560v-80h-80v480Zm160-560h160q0-33-23.5-56.5T480-800q-33 0-56.5 23.5T400-720ZM240-160v-480 480Z" />
           </svg>
           <p class="label">Produkty</p>
         </div>
 
         <div class="menu-option" id="ustawienia" @click="switcher">
-          <svg
-            class="icon"
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 -960 960 960"
-            width="24"
-            fill="#333"
-          >
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"
+            fill="#000">
             <path
-              d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"
-            />
+              d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z" />
           </svg>
           <p class="label">Konto</p>
         </div>
         <div class="separator"></div>
-        <div
-  class="menu-option"
-  id="Admin"
-  @click="switcher"
-  v-if="userPermission === 1 || userPermission === 2"
->
-  <span class="icon">
-    <p class="navItem"><span class="material-symbols-outlined">admin_panel_settings</span></p>
-  </span>
-  <p class="label">Panel Produktów</p>
-</div>
-<div
-  class="menu-option"
-  id="Raport"
-  @click="switcher"
-  v-if="userPermission === 1 || userPermission === 2"
->
-  <span class="icon">
-    <p class="navItem"><span class="material-symbols-outlined">assignment</span></p>
-  </span>
-  <p class="label">Zamówienioa klientów</p>
-</div>
-<div
-  class="menu-option"
-  id="PharmacyEmployee"
-  @click="switcher"
-  v-if="userPermission === 2"
->
-  <span class="icon">
-    <p><span class="material-symbols-outlined">person_add</span></p>
-  </span>
-  <p class="label">Dodaj farmaceute</p>
-</div>
+        <div class="menu-option" id="Admin" @click="switcher" v-if="userPermission === 1 || userPermission === 2">
+          <span class="icon">
+            <p class="navItem"><span class="material-symbols-outlined">admin_panel_settings</span></p>
+          </span>
+          <p class="label">Panel Produktów</p>
+        </div>
+        <div class="menu-option" id="Raport" @click="switcher" v-if="userPermission === 1 || userPermission === 2">
+          <span class="icon">
+            <p class="navItem"><span class="material-symbols-outlined">assignment</span></p>
+          </span>
+          <p class="label">Zamówienia klientów</p>
+        </div>
+        <div class="menu-option" id="PharmacyEmployee" @click="switcher" v-if="userPermission === 2">
+          <span class="icon">
+            <p><span class="material-symbols-outlined">person_add</span></p>
+          </span>
+          <p class="label">Dodaj farmaceute</p>
+        </div>
       </div>
       <div class="logout">
         <div class="menu-option" @click="logout">
-          <svg
-            class="icon"
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 -960 960 960"
-            width="24px"
-            fill="#000000"
-          >
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+            fill="#000000">
             <path
-              d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"
-            />
+              d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
           </svg>
           <p class="label">Wyloguj się</p>
         </div>
@@ -372,8 +328,8 @@ $mint: #6b9922;
 
           svg {
             fill: #000;
-            width: 24px;
-            height: 24px;
+            min-width: 24px;
+            min-height: 24px;
           }
         }
 

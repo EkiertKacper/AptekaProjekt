@@ -117,6 +117,7 @@ const prevPage = () => {
       :totalPages="totalPages"
       @next="nextPage"
       @prev="prevPage"
+      style="margin-bottom: 1rem;"
     />
     <Toast ref="toast" />
   </main>
@@ -133,7 +134,6 @@ main {
   display: flex;
   flex-direction: column;
   background-color: white;
-  min-height: 100vh;
 
   header {
     background-color: white;
@@ -165,20 +165,22 @@ main {
     display: flex;
     justify-content: center;
     padding: 12px;
-    min-height: 95vh;
     ul {
       list-style: none;
       display: flex;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 20px;
       max-width: 1200px;
       width: 100%;
+      height: fit-content;
     }
 
     li {
       flex-grow: 1;
       width: 280px;
-      max-height: 245px;
+      max-height: 250px;
+      max-width: 280px;
       background-color: white;
       border-radius: 12px;
       padding: 12px;
@@ -186,6 +188,7 @@ main {
       flex-direction: column;
       align-items: center;
       box-shadow: $shadow;
+      cursor: pointer;
 
       img {
         width: 170px;
@@ -254,6 +257,7 @@ main {
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer;
 
             &:hover {
               background-color: darken($green, 10%);

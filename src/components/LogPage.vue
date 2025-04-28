@@ -1,7 +1,7 @@
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, onMounted } from 'vue';
 
-const emit = defineEmits()
+const emit = defineEmits();
 const isLogin = ref(true);
 const name = ref('');
 const surname = ref('');
@@ -9,6 +9,7 @@ const email = ref('');
 const password = ref('');
 const error = ref('');
 const success = ref('');
+
 
 function toggleForm() {
   isLogin.value = !isLogin.value;

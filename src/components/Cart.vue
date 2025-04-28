@@ -159,6 +159,7 @@ $gray: #666;
   background-color: $light-gray;
   border-radius: 8px;
   margin-bottom: 10px;
+  cursor: pointer;
 
   .product-info {
     display: flex;
