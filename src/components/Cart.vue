@@ -45,29 +45,6 @@ const checkout = async () => {
   }
 };
 
-const fetchData = async () => {
-  const token = localStorage.getItem("sessionToken");
-  try {
-    const response = await fetch("http://localhost:3030/api/v1/listDrugs", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-      body: JSON.stringify({ page: 0, limit: 10 }),
-    });
-    const fullData = await response.json();
-    data.value = fullData.data;
-    const notInCart = data.value.filter(
-      (product) => !cart.items.some((item) => item.idDrug === product.idDrug)
-    );
-    suggested.value = notInCart.sort(() => 0.5 - Math.random()).slice(0, 8);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-onMounted(fetchData);
 
 const validateQuantity = (item) => {
   let q = item.quantity;

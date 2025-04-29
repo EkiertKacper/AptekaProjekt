@@ -153,6 +153,7 @@ onMounted(fetchProducts);
         placeholder="Cena"
         required
         type="number"
+        step="0.01"
       />
       <input v-model="newProduct.type" placeholder="Typ" required />
       <input v-model="newProduct.companyName" placeholder="Firma" required />
